@@ -1,6 +1,16 @@
+"基本設定
+""オートインデント
+set smartindent
+set autoindent
+set smarttab
+""背景
 set background=dark
-syntax enable 
-
+""シンタックスハイライト
+syntax enable
+""行番号の表示
+set number
+""括弧の強調表示
+set showmatch
 "TAB入力時の設定
 set noexpandtab
 set tabstop=4
