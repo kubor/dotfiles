@@ -1,7 +1,16 @@
-# Created by newuser for 5.0.5
 # LANG
 export LANG=ja_JP.UTF-8
 
+# エイリアス設定
+alias vi="vim -u NONE --noplugin"
+alias awk="gawk"
+alias ll="ls -l"
+alias la="ls -a"
+alias lha"ls -lha"
+## グローバルエイリアス
+alias -g L="| less"
+alias -g G="| grep"
+alias -g W="| wc"
 # HISTORY
 HISTFILE=~/.zsh_history
 HISTSIZE=1000000
