@@ -29,7 +29,14 @@ setopt hist_verify
 setopt share_history
 ## コマンドラインの先頭がスペースで始まる場合ヒストリに追加しない
 setopt hist_ignore_space
-
+# プロンプトの設定
+# プロンプトが表示されるたびにプロンプト文字列を評価、置換する
+setopt PROMPT_SUBST
+## プロンプトの設定（左）
+PROMPT="%{[34m%}[%n@MBP]% $ %{[m%}"
+## プロンプトの設定（右）
+## カレントディレクトリのフルパスを表示する
+RPROMPT="%{[34m%}[%d]%{[m%}"
 # LS_COLORS
 ##LS用カラースキームの読み込み
 eval $(gdircolors ~/dircolors-solarized/dircolors.ansi-universal)
