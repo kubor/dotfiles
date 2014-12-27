@@ -14,6 +14,9 @@ set noexpandtab
 set tabstop=4
 set shiftwidth=4
 set softtabstop=0
+"ESC連打で検索結果のハイライトを消す
+set hlsearch
+nmap <Esc><Esc> :nohlsearch<CR><Esc>
 "NeoBundleの設定
 filetype plugin indent off
 ""NeoBundleで管理するディレクトリを指定
