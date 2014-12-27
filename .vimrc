@@ -3,8 +3,6 @@
 set smartindent
 set autoindent
 set smarttab
-""背景
-set background=dark
 ""シンタックスハイライト
 syntax enable
 ""行番号の表示
@@ -26,11 +24,27 @@ endif
 ""NeoBundle自身もNeoBundleで管理する
 NeoBundleFetch 'Shougo/neobundle.vim'
 ""プラグイン
-
+""monokai
+NeoBundle 'sickill/vim-monokai'
+NeoBundle 'w0ng/vim-hybrid'
+""NeoBundle設定終了
+call neobundle#end()
 filetype plugin indent on
 ""未インストールのプラグインを起動時に通知
 NeoBundleCheck
-
+"カラースキームの設定
+""iTerm2用
+let g:hybrid_use_iTerm_colors = 1
+colorscheme hybrid
+if &term =~ "xterm-256color" || "screen-256color"
+	set t_Co=256
+    set t_Sf=[3%dm
+	set t_Sb=[4%dm
+elseif &term =~ "xterm-color"
+	set t_Co=8
+	set t_Sf=[3%dm
+	set t_Sb=[4%dm
+endif
 "Status Lineの設定
 "自動文字数カウント
 augroup WordCount
@@ -76,13 +90,13 @@ set statusline+=%{matchstr(hostname(),'\\w\\+')}@
 "ファイル名表示
 set statusline+=%<%F
 "変更のチェック表示
-set statusline+=%m
+"set statusline+=%m
 "読み込み専用かどうか表示
 set statusline+=%r
 "ヘルプページなら[HELP]と表示
-set statusline+=%h
+"set statusline+=%h
 "プレビューウインドウなら[Prevew]と表示
-set statusline+=%w
+"set statusline+=%w
 "ファイルフォーマット表示
 set statusline+=[%{&fileformat}]
 "文字コード表示
@@ -92,7 +106,7 @@ set statusline+=%y
 "ここからツールバー右側
 set statusline+=%=
 "skk.vimの状態
-set statusline+=%{exists('*SkkGetModeStr')?SkkGetModeStr():''}
+"set statusline+=%{exists('*SkkGetModeStr')?SkkGetModeStr():''}
 "文字バイト数/カラム番号
 set statusline+=[%{col('.')-1}=ASCII=%B,HEX=%c]
 "現在文字列/全体列表示
@@ -106,4 +120,3 @@ set statusline+=[%p%%]
 
 "Backspaceを有効にする
 set backspace=start,eol,indent
-
