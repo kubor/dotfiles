@@ -16,6 +16,20 @@ set noexpandtab
 set tabstop=4
 set shiftwidth=4
 set softtabstop=0
+"NeoBundleの設定
+filetype plugin indent off
+""NeoBundleで管理するディレクトリを指定
+if has('vim_starting')
+	set runtimepath+=~/dotfiles/.vim/neobundle/neobundle.vim
+	call neobundle#begin(expand('~/dotfiles/.vim/neobundle'))
+endif
+""NeoBundle自身もNeoBundleで管理する
+NeoBundleFetch 'Shougo/neobundle.vim'
+""プラグイン
+
+filetype plugin indent on
+""未インストールのプラグインを起動時に通知
+NeoBundleCheck
 
 "Status Lineの設定
 "自動文字数カウント
