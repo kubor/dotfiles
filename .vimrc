@@ -34,6 +34,11 @@ NeoBundle 'sickill/vim-monokai'
 NeoBundle 'w0ng/vim-hybrid'
 ""neocomplete
 NeoBundle 'Shougo/neocomplete.vim'
+""vim-perl
+NeoBundle 'vim-perl/vim-perl'
+""snipets
+NeoBundle 'Shougo/neosnippet'
+NeoBundle 'Shougo/neosnippet-snippets'
 ""NeoBundle設定終了
 call neobundle#end()
 filetype plugin indent on
