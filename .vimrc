@@ -1,4 +1,4 @@
-"基本設定
+"基本設定			
 ""オートインデント
 set smartindent
 set autoindent
@@ -9,6 +9,7 @@ syntax enable
 set number
 ""括弧の強調表示
 set showmatch
+set matchtime=1
 "TAB入力時の設定
 set noexpandtab
 set tabstop=4
