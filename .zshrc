@@ -6,7 +6,6 @@ alias vi="vim -u NONE --noplugin"
 alias awk="gawk"
 alias ll="ls -l"
 alias la="ls -a"
-alias lha"ls -lha"
 ## グローバルエイリアス
 alias -g L="| less"
 alias -g G="| grep"
