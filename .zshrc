@@ -1,6 +1,5 @@
 # LANG
 export LANG=ja_JP.UTF-8
-
 # エイリアス設定
 alias vi="vim -u NONE --noplugin"
 alias awk="gawk"
@@ -36,21 +35,13 @@ PROMPT="%{[34m%}[%n@MBP]% $ %{[m%}"
 ## プロンプトの設定（右）
 ## カレントディレクトリのフルパスを表示する
 RPROMPT="%{[34m%}[%d]%{[m%}"
-# LS_COLORS
-##LS用カラースキームの読み込み
-eval $(gdircolors ~/dircolors-solarized/dircolors.ansi-universal)
-##LSをglsにエイリアスする（Mac用）
-alias ls='gls --color=auto'
-
 # cdなしでディレクトリを移動する
 setopt auto_cd
 ## cdした後に自動的にlsする
 function chpwd() { ls }
-
 # 補完
 ## zsh-competionsの読み込み
 fpath=(/usr/local/share/zsh-completions $fpath)
-
 ## 補完機能を有効にする
 autoload -Uz compinit
 compinit -u
@@ -58,7 +49,6 @@ compinit -u
 setopt auto_list
 ## TAB で順に補完候補を切り替える
 setopt auto_menu
-
 # others
 ## ビープを鳴らさない
 setopt nobeep
