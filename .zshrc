@@ -27,6 +27,8 @@ setopt hist_verify
 setopt share_history
 ## コマンドラインの先頭がスペースで始まる場合ヒストリに追加しない
 setopt hist_ignore_space
+# lsをglsにエイリアスする（lsのカラーハイライトが有効にならない場合の対策）
+alias ls="gls --color=auto"
 # プロンプトの設定
 # プロンプトが表示されるたびにプロンプト文字列を評価、置換する
 setopt PROMPT_SUBST
