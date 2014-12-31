@@ -15,6 +15,9 @@ set noexpandtab
 set tabstop=4
 set shiftwidth=4
 set softtabstop=0
+"現在行番号をハイライトする
+set cursorline
+hi clear CursorLine
 "ESC連打で検索結果のハイライトを消す
 set hlsearch
 nmap <Esc><Esc> :nohlsearch<CR><Esc>
@@ -44,6 +47,19 @@ call neobundle#end()
 filetype plugin indent on
 ""未インストールのプラグインを起動時に通知
 NeoBundleCheck
+"スニペットの設定
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\: pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\: "\<TAB>"
+if has('conceal')
+  set conceallevel=2 concealcursor=i
+  endif
 "カラースキームの設定
 ""iTerm2用
 let g:hybrid_use_iTerm_colors = 1
