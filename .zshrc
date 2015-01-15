@@ -1,3 +1,5 @@
+# PATH
+PATH=/home/$USER/bin/:$PATH
 # LANG
 export LANG=ja_JP.UTF-8
 # エイリアス設定
