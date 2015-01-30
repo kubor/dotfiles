@@ -33,7 +33,7 @@ setopt hist_ignore_space
 # プロンプトが表示されるたびにプロンプト文字列を評価、置換する
 setopt PROMPT_SUBST
 ## プロンプトの設定（左）
-PROMPT="%{[34m%}[%n@MBP]% $ %{[m%}"
+PROMPT="%{[34m%}[%n@${HOST}]% $ %{[m%}"
 ## プロンプトの設定（右）
 ## カレントディレクトリのフルパスを表示する
 RPROMPT="%{[34m%}[%d]%{[m%}"
