@@ -2,6 +2,8 @@
 PATH=/home/$USER/bin/:$PATH
 # LANG
 export LANG=ja_JP.UTF-8
+# rbenv の初期化
+eval "$(rbenv init -)"
 # エイリアス設定
 alias vi="vim -u NONE --noplugin"
 alias awk="gawk"
