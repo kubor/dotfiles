@@ -3,6 +3,11 @@
 set smartindent
 set autoindent
 set smarttab
+"" set font
+set guifont=Ricty\ 10
+""文字コードを設定
+scriptencoding utf-8
+set encoding=utf-8
 ""シンタックスハイライト
 syntax enable
 ""行番号の表示
@@ -12,8 +17,8 @@ set showmatch
 set matchtime=1
 "TAB入力時の設定
 set noexpandtab
-set tabstop=4
-set shiftwidth=4
+set tabstop=2
+set shiftwidth=2
 set softtabstop=0
 "現在行番号をハイライトする
 set cursorline
@@ -39,9 +44,13 @@ NeoBundle 'w0ng/vim-hybrid'
 NeoBundle 'Shougo/neocomplete.vim'
 ""vim-perl
 NeoBundle 'vim-perl/vim-perl'
+""lightlinet
+NeoBundle 'itchyny/lightline.vim'
 ""snipets
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/neosnippet-snippets'
+""perldoc.vim
+NeoBundle 'hotchpotch/perldoc-vim'
 ""NeoBundle設定終了
 call neobundle#end()
 filetype plugin indent on
@@ -157,77 +166,75 @@ endif
 " https://github.com/c9s/perlomni.vim
 let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 "Status Lineの設定
-"自動文字数カウント
-augroup WordCount
-    autocmd!
-    autocmd BufWinEnter,InsertLeave,CursorHold * call WordCount('char')
-augroup END
-let s:WordCountStr = ''
-let s:WordCountDict = {'word': 2, 'char': 3, 'byte': 4}
-function! WordCount(...)
-    if a:0 == 0
-        return s:WordCountStr
-    endif
-    let cidx = 3
-    silent! let cidx = s:WordCountDict[a:1]
-    let s:WordCountStr = ''
-    let s:saved_status = v:statusmsg
-    exec "silent normal! g\<c-g>"
-    if v:statusmsg !~ '^--'
-        let str = ''
-        silent! let str = split(v:statusmsg, ';')[cidx]
-        let cur = str2nr(matchstr(str, '\d\+'))
-        let end = str2nr(matchstr(str, '\d\+\s*$'))
-        if a:1 == 'char'
-            " ここで(改行コード数*改行コードサイズ)を'g<C-g>'の文字数から引く
-            let cr = &ff == 'dos' ? 2 : 1
-            let cur -= cr * (line('.') - 1)
-            let end -= cr * line('$')
-        endif
-        let s:WordCountStr = printf('%d/%d', cur, end)
-    endif
-    let v:statusmsg = s:saved_status
-    return s:WordCountStr
+""--- light line ---
+let g:lightline = {
+        \ 'colorscheme': 'wombat',
+        \ 'mode_map': {'c': 'NORMAL'},
+        \ 'active': {
+        \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
+        \ },
+        \ 'component_function': {
+        \   'modified': 'MyModified',
+        \   'readonly': 'MyReadonly',
+        \   'fugitive': 'MyFugitive',
+        \   'filename': 'MyFilename',
+        \   'fileformat': 'MyFileformat',
+        \   'filetype': 'MyFiletype',
+        \   'fileencoding': 'MyFileencoding',
+        \   'mode': 'MyMode'
+				\	},
+        \ 'separator': {'left':"\u2b80", 'right':"\u2b82"},
+        \ 'subseparator': {'left':"\u2b81", 'right':"\u2b83"}
+        \ }
+
+function! MyModified()
+  return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
 endfunction
 
-"ステータスラインにコマンドを表示
+function! MyReadonly()
+  return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? 'x' : ''
+endfunction
+
+function! MyFilename()
+  return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
+        \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
+        \  &ft == 'unite' ? unite#get_status_string() :
+        \  &ft == 'vimshell' ? vimshell#get_status_string() :
+        \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
+        \ ('' != MyModified() ? ' ' . MyModified() : '')
+endfunction
+
+function! MyFugitive()
+  try
+    if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
+      return fugitive#head()
+    endif
+  catch
+  endtry
+  return ''
+endfunction
+
+function! MyFileformat()
+  return winwidth(0) > 70 ? &fileformat : ''
+endfunction
+
+function! MyFiletype()
+  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+endfunction
+
+function! MyFileencoding()
+  return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
+endfunction
+
+function! MyMode()
+  return winwidth(0) > 60 ? lightline#mode() : ''
+endfunction
+
+"" ---- light line ----
+""ステータスラインにコマンドを表示
 set showcmd
-"ステータスラインを常に表示
+""ステータスラインを常に表示
 set laststatus=2
-"ファイルナンバー表示
-set statusline=[%n]
-"ホスト名表示
-set statusline+=%{matchstr(hostname(),'\\w\\+')}@
-"ファイル名表示
-set statusline+=%<%F
-"変更のチェック表示
-"set statusline+=%m
-"読み込み専用かどうか表示
-set statusline+=%r
-"ヘルプページなら[HELP]と表示
-"set statusline+=%h
-"プレビューウインドウなら[Prevew]と表示
-"set statusline+=%w
-"ファイルフォーマット表示
-set statusline+=[%{&fileformat}]
-"文字コード表示
-set statusline+=[%{has('multi_byte')&&\&fileencoding!=''?&fileencoding:&encoding}]
-"ファイルタイプ表示
-set statusline+=%y
-"ここからツールバー右側
-set statusline+=%=
-"skk.vimの状態
-"set statusline+=%{exists('*SkkGetModeStr')?SkkGetModeStr():''}
-"文字バイト数/カラム番号
-set statusline+=[%{col('.')-1}=ASCII=%B,HEX=%c]
-"現在文字列/全体列表示
-set statusline+=[C=%c/%{col('$')-1}]
-"現在文字行/全体行表示
-set statusline+=[L=%l/%L]
-"現在のファイルの文字数をカウント
-set statusline+=[WC=%{exists('*WordCount')?WordCount():[]}]
-"現在行が全体行の何%目か表示
-set statusline+=[%p%%]
 
 "Backspaceを有効にする
 set backspace=start,eol,indent
