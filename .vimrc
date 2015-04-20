@@ -50,6 +50,8 @@ set cursorline
 hi clear CursorLine
 " Backspaceを有効にする
 set backspace=start,eol,indent
+" 前回終了した位置から編集を開始する
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\""
 
 "------------------------"
 "     キーマッピング
@@ -340,3 +342,4 @@ endfunction
 " シンタックスハイライト
 "------------------------"
 syntax enable
+au BufRead,BufNewFile {*.md,*.txt} set filetype=markdown
