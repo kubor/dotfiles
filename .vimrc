@@ -37,10 +37,10 @@ set matchtime=1
 "" '<'と'>'も強調表示
 set matchpairs& matchpairs+=<:>
 " TAB入力時の設定
-set noexpandtab
+set expandtab
 set tabstop=8
-set shiftwidth=2
-set softtabstop=2
+set shiftwidth=4
+set softtabstop=4
 " 検索時の設定
 set ignorecase
 set smartcase
@@ -50,6 +50,8 @@ set cursorline
 hi clear CursorLine
 " Backspaceを有効にする
 set backspace=start,eol,indent
+" 前回終了した位置から編集を開始する
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\""
 
 "------------------------"
 "     キーマッピング
@@ -91,8 +93,8 @@ function! s:mkdir(dir, force)
       )
     call mkdir(iconv(a:dir, &encoding, &termencoding), 'p')
   endif
-endfunction
 autocmd MyAutoCmd BufWritePre * call s:mkdir(expand('<afile>:p:h'), v:cmdbang)
+endfunction
 
 "------------------------"
 "     NeoBundleの設定
@@ -106,6 +108,7 @@ endif
 " NeoBundle自身もNeoBundleで管理する
 NeoBundleFetch 'Shougo/neobundle.vim'
 "----- プラグイン
+NeoBundle 'Shougo/unite.vim'
 "" indentline
 NeoBundle 'Yggdroot/indentLine'
 "" monokai
@@ -125,30 +128,36 @@ NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/neosnippet-snippets'
 "" perldoc.vim
 NeoBundle 'hotchpotch/perldoc-vim'
+"" syntastic
+NeoBundle 'scrooloose/syntastic'
+let g:syntastic_python_checkers = ['flake8']
+
 ""----- 遅延モードでロードするプラグイン
 NeoBundleLazy 'Shougo/neocomplete.vim', {
     \ "autoload": {"insert": 1}}
 " Djangoのサポート
 NeoBundleLazy "lambdalisue/vim-django-support", {
-      \ "autoload": {
-      \   "filetypes": ["python", "python3", "djangohtml"]
-      \ }}
+    \ "autoload": {
+	\ "filetypes": ["python", "python3", "djangohtml"]}}
 " vim-virtualenv
 NeoBundleLazy "jmcantrell/vim-virtualenv", {
-      \ "autoload": {
-      \   "filetypes": ["python", "python3", "djangohtml"]
-      \ }}
+    \ "autoload": {
+	\ "filetypes": ["python", "python3", "djangohtml"]}}
 " jedi-vim
 NeoBundleLazy "davidhalter/jedi-vim", {
-      \ "autoload": {
-      \   "filetypes": ["python", "python3", "djangohtml"],
-      \ }}
+    \ "autoload": {
+    \ "filetypes": ["python", "python3", "djangohtml"]}}
 let s:hooks = neobundle#get_hooks("jedi-vim")
 function! s:hooks.on_source(bundle)
+  autocmd FileType python setlocal omnifunc=jedi#completions
+  let g:jedi#completions_enabled = 0
   let g:jedi#auto_vim_configuration = 0
-  let g:jedi#popup_select_first = 0
-  let g:jedi#rename_command = '<Leader>R'
-  let g:jedi#goto_assignments_command = '<Leader>G'
+  if !exists('g:neocomplete#force_omni_input_patterns')
+    let g:neocomplete#force_omni_input_patterns = {}
+  endif
+"  let g:neocomplete#force_omni_input_patterns.python = '\h\w\|[^. \t].\w'
+  let g:neocomplete#force_omni_input_patterns.python =
+    \ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
 endfunction
 "----- NeoBundleの設定を終了
 call neobundle#end()
@@ -170,25 +179,22 @@ let g:neocomplete#sources#syntax#min_keyword_length = 3
 let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 " Define dictionary.
 let g:neocomplete#sources#dictionary#dictionaries = {
-    \ 'default' : '',
-    \ 'vimshell' : $HOME.'/.vimshell_hist',
-    \ 'scheme' : $HOME.'/.gosh_completions'
-        \ }
+    \ 'default': '',
+    \ 'vimshell': $HOME.'/.vimshell_hist',
+    \ 'scheme': $HOME.'/.gosh_completions'}
 " Define keyword.
 if !exists('g:neocomplete#keyword_patterns')
     let g:neocomplete#keyword_patterns = {}
 endif
 let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 " Plugin key-mappings.
-inoremap <expr><C-g>     neocomplete#undo_completion()
-inoremap <expr><C-l>     neocomplete#complete_common_string()
+inoremap <expr><C-g> neocomplete#undo_completion()
+inoremap <expr><C-l> neocomplete#complete_common_string()
 " Recommended key-mappings.
 " <CR>: close popup and save indent.
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function()
   return neocomplete#close_popup() . "\<CR>"
-  " For no inserting <CR> key.
-  "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
 endfunction
 " <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
@@ -206,7 +212,6 @@ inoremap <expr><CR> pumvisible() ? neocomplete#close_popup() : "\<CR>"
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 " Enable heavy omni completion.
@@ -229,8 +234,8 @@ function! s:template_keywords()
 endfunction
 " テンプレート中に含まれる'<+CURSOR+>'にカーソルを移動
 autocmd MyAutoCmd User plugin-template-loaded
-    \   if search('<+CURSOR+>')
-    \ |   silent! execute 'normal! "_da>'
+    \ if search('<+CURSOR+>')
+    \ | silent! execute 'normal! "_da>'
     \ | endif
 
 "------------------------"
@@ -240,11 +245,10 @@ imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
 imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-  \ "\<Plug>(neosnippet_expand_or_jump)"
-  \: pumvisible() ? "\<C-n>" : "\<TAB>"
+    \ "\<Plug>(neosnippet_expand_or_jump)": pumvisible() ?
+    \ "\<C-n>" : "\<TAB>"
 smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-  \ "\<Plug>(neosnippet_expand_or_jump)"
-  \: "\<TAB>"
+    \ "\<Plug>(neosnippet_expand_or_jump)": "\<TAB>"
 if has('conceal')
   set conceallevel=2 concealcursor=i
   endif
@@ -288,13 +292,14 @@ let g:lightline = {
         \   'filetype': 'MyFiletype',
         \   'fileencoding': 'MyFileencoding',
         \   'mode': 'MyMode'
-				\	},
+	\ },
         \ 'separator': {'left':"\u2b80", 'right':"\u2b82"},
         \ 'subseparator': {'left':"\u2b81", 'right':"\u2b83"}
         \ }
 
 function! MyModified()
-  return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+  return &ft =~ 'help\|vimfiler\|gundo' ?
+    \ '' : &modified ? '+' : &modifiable ? '' : '-'
 endfunction
 
 function! MyReadonly()
@@ -340,3 +345,4 @@ endfunction
 " シンタックスハイライト
 "------------------------"
 syntax enable
+au BufRead,BufNewFile {*.md,*.txt} set filetype=markdown
