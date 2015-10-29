@@ -2,13 +2,18 @@
 PATH=/home/$USER/bin/:$PATH
 # LANG
 export LANG=ja_JP.UTF-8
-# rbenv の初期化
-eval "$(rbenv init -)"
+# rbenv | pyenv の初期化
+eval "$(rbenv init - --no-rehash)"
+eval "$(pyenv init - --no-rehash)"
+eval "$(pyenv virtualenv-init - --no-rehash)"
 # エイリアス設定
 alias vi="vim -u NONE --noplugin"
 alias awk="gawk"
+alias lls=ls_abbrev
 alias ll="ls -l"
 alias la="ls -a"
+alias grep="grep --color=auto"
+alias egrep="egrep --color=auto"
 ## グローバルエイリアス
 alias -g L="| less"
 alias -g G="| grep"
@@ -34,11 +39,53 @@ setopt hist_ignore_space
 # プロンプトの設定
 # プロンプトが表示されるたびにプロンプト文字列を評価、置換する
 setopt PROMPT_SUBST
-## プロンプトの設定（左）
-PROMPT="%{[34m%}[%n@%m]% $ %{[m%}"
-## プロンプトの設定（右）
-## カレントディレクトリのフルパスを表示する
-RPROMPT="%{[34m%}[%d]%{[m%}"
+# gitのステータスをプロンプトに表示する
+# imported from http://int128.hatenablog.com/entry/2015/07/15/003851
+autoload -Uz add-zsh-hook
+
+typeset -A emoji
+emoji[ok]=$'\U2705'
+emoji[error]=$'\U274C'
+emoji[git]=$'\U1F500'
+emoji[git_changed]=$'\U1F37A'
+emoji[git_untracked]=$'\U1F363'
+emoji[git_clean]=$'\U2728'
+emoji[right_arrow]=$'\U2794'
+
+function _vcs_git_indicator () {
+  typeset -A git_info
+  local git_indicator git_status
+  git_status=("${(f)$(git status --porcelain --branch 2> /dev/null)}")
+  (( $? == 0 )) && {
+    git_info[branch]="${${git_status[1]}#\#\# }"
+    shift git_status
+    git_info[changed]=${#git_status:#\?\?*}
+    git_info[untracked]=$(( $#git_status - ${git_info[changed]} ))
+    git_info[clean]=$(( $#git_status == 0 ))
+
+    git_indicator=("${emoji[git]}  %{%F{blue}%}${git_info[branch]}%{%f%}")
+    (( ${git_info[clean]}     )) && git_indicator+=("${emoji[git_clean]}")
+    (( ${git_info[changed]}   )) && git_indicator+=("${emoji[git_changed]}  %{%F{yellow}%}${git_info[changed]} changed%{%f%}")
+    (( ${git_info[untracked]} )) && git_indicator+=("${emoji[git_untracked]}  %{%F{red}%}${git_info[untracked]} untracked%{%f%}")
+  }
+  _vcs_git_indicator="${git_indicator}"
+}
+
+add-zsh-hook precmd _vcs_git_indicator
+
+function {
+  local dir='%{%F{blue}%B%}%~%{%b%f%}'
+  local now='%{%F{yellow}%}%D{%b/%e(%a)%R}%{%f%}'
+  local rc="%(?,${emoji[ok]} ,${emoji[error]}  %{%F{red}%}%?%{%f%})"
+  local user='%{%F{green}%}%n%{%f%}@'
+  local host='%{%F{green}%}%m%{%f%}'
+  [ "$SSH_CLIENT" ] && local via="${${=SSH_CLIENT}[1]} %{%B%}${emoji[right_arrow]}%{%b%} "
+  local git='$_vcs_git_indicator'
+  local mark=$'%# '
+  local linebreak=$'\n'
+  PROMPT="$user$via$host $mark"
+  RPROMPT="$dir $rc $git $now"
+}
 # cdなしでディレクトリを移動する
 setopt auto_cd
 ## cdした後に自動的にlsする # import yonchu / chpwd_for_zsh.sh
@@ -82,7 +129,7 @@ ls_abbrev() {
 fpath=(/usr/local/share/zsh-completions $fpath)
 ## 補完機能を有効にする
 autoload -Uz compinit
-compinit -u
+compinit -C
 ## 補完候補を一覧表示
 setopt auto_list
 ## TAB で順に補完候補を切り替える
@@ -92,3 +139,12 @@ setopt auto_menu
 setopt nobeep
 ## ディレクトリ名だけで cd
 setopt auto_cd
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
+
+
+# for debug
+#if (which zprof > /dev/null) ;then
+#      zprof | less
+#fi
