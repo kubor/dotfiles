@@ -26,6 +26,15 @@ alias -g W="| wc"
 if [ -e ~/.zshrc.ailias ]; then
     source ~/.zshrc.ailias
 fi
+## エスケープシーケンスカラーの設定
+local DEFAULT=$'%{[m%}'
+local RED=$'%{[1;31m%}'
+local GREEN=$'%{[1;32m%}'
+local YELLOW=$'%{[1;33m%}'
+local BLUE=$'%{[1;34m%}'
+local PURPLE=$'%{[1;35m%}'
+local LIGHT_BLUE=$'%{[1;36m%}'
+local WHITE=$'%{[1;37m%}'
 # HISTORY
 HISTFILE=~/.zsh_history
 HISTSIZE=1000000
@@ -142,6 +151,23 @@ compinit -C
 setopt auto_list
 ## TAB で順に補完候補を切り替える
 setopt auto_menu
+## '='以降の入力も補完する
+setopt magic_equal_subst
+## 補完関数の設定
+## 補完候補をカーソルで選択可能にする
+zstyle ':completion:*:default' menu select=1
+## _expand: グロブや変数を展開する
+## _complete: 通常の補完
+## _match: グロブでコマンドを補完する
+## _approximate: ミススペルを訂正して補完する
+## _history: 履歴から補完する
+zstyle ':completion:*' completer _expand _complete _match _approximate _history
+## 補完候補をグルーピングして表示する
+zstyle ':completion:*:descriptions' format $YELLOW'completing %B%d%b'$DEFAULT
+## 自動入力されるカンマなどを適宜削除する
+setopt auto_param_keys
+## 補完候補を詰めて表示
+setopt list_packed
 # others
 ## ビープを鳴らさない
 setopt nobeep
