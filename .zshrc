@@ -139,6 +139,8 @@ setopt auto_menu
 setopt nobeep
 ## ディレクトリ名だけで cd
 setopt auto_cd
+## cdの履歴を保存
+setopt auto_pushd
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
