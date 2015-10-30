@@ -1,5 +1,9 @@
 # PATH
 PATH=/home/$USER/bin/:$PATH
+## サーバ個別のPATH設定をインポート
+if [ -e ~/.zshrc.path ]; then
+    source ~/.zshrc.path
+fi
 # LANG
 export LANG=ja_JP.UTF-8
 # rbenv | pyenv の初期化
@@ -18,6 +22,10 @@ alias egrep="egrep --color=auto"
 alias -g L="| less"
 alias -g G="| grep"
 alias -g W="| wc"
+## サーバ個別のailias設定をインポート
+if [ -e ~/.zshrc.ailias ]; then
+    source ~/.zshrc.ailias
+fi
 # HISTORY
 HISTFILE=~/.zsh_history
 HISTSIZE=1000000
