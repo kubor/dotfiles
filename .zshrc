@@ -184,6 +184,16 @@ setopt nobeep
 setopt auto_cd
 ## cdの履歴を保存
 setopt auto_pushd
+# pecoで履歴を検索する
+function peco-history-selection() {
+    BUFFER=`history -n 1 | tail -r  | awk '!a[$0]++' | peco`
+    CURSOR=$#BUFFER
+    zle reset-prompt
+}
+zle -N peco-history-selection
+if type peco >/dev/null 2>&1; then
+    bindkey '^r' peco-history-selection
+fi
 
 # for debug
 #if (which zprof > /dev/null) ;then
