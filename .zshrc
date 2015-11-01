@@ -2,7 +2,7 @@
 #                                  .zshrc                                     #
 # --------------------------------------------------------------------------- #
 # PATH
-PATH=/home/$USER/bin/:$PATH
+PATH=/home/$USER/bin:$PATH
 ## サーバ個別のPATH設定をインポート
 if [ -f ~/.zshrc.path ]; then
     source ~/.zshrc.path
