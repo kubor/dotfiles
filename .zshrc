@@ -1,30 +1,39 @@
+# --------------------------------------------------------------------------- #
+#                                  .zshrc                                     #
+# --------------------------------------------------------------------------- #
 # PATH
 PATH=/home/$USER/bin/:$PATH
 ## サーバ個別のPATH設定をインポート
-if [ -e ~/.zshrc.path ]; then
+if [ -f ~/.zshrc.path ]; then
     source ~/.zshrc.path
 fi
 # LANG
 export LANG=ja_JP.UTF-8
 # rbenv | pyenv の初期化
-eval "$(rbenv init - --no-rehash)"
-eval "$(pyenv init - --no-rehash)"
-eval "$(pyenv virtualenv-init - --no-rehash)"
+if type rbenv >/dev/null 2>&1; then
+    eval "$(rbenv init - --no-rehash)"
+fi
+if type pyenv >/dev/null 2>&1; then
+    eval "$(pyenv init - --no-rehash)"
+    eval "$(pyenv virtualenv-init - --no-rehash)"
+fi
 # エイリアス設定
 alias vi="vim -u NONE --noplugin"
 alias awk="gawk"
 alias lls=ls_abbrev
 alias ll="ls -l"
 alias la="ls -a"
+alias mv="mv -i"
+alias rm="rm -i"
 alias grep="grep --color=auto"
 alias egrep="egrep --color=auto"
 ## グローバルエイリアス
 alias -g L="| less"
 alias -g G="| grep"
 alias -g W="| wc"
-## サーバ個別のailias設定をインポート
-if [ -e ~/.zshrc.ailias ]; then
-    source ~/.zshrc.ailias
+## サーバ個別のalias設定をインポート
+if [ -f ~/.zshrc.alias ]; then
+    source ~/.zshrc.alias
 fi
 ## エスケープシーケンスカラーの設定
 local DEFAULT=$'%{[m%}'
@@ -94,7 +103,7 @@ function {
   local dir='%{%F{blue}%B%}%~%{%b%f%}'
   local now='%{%F{yellow}%}%D{%b/%e(%a)%R}%{%f%}'
   local rc="%(?,${emoji[ok]} ,${emoji[error]}  %{%F{red}%}%?%{%f%})"
-  local user='%{%F{green}%}%n%{%f%}@'
+  local user='%{%F{green}%}%n@%{%f%}'
   local host='%{%F{green}%}%m%{%f%}'
   [ "$SSH_CLIENT" ] && local via="${${=SSH_CLIENT}[1]} %{%B%}${emoji[right_arrow]}%{%b%} "
   local git='$_vcs_git_indicator'
@@ -156,13 +165,13 @@ setopt magic_equal_subst
 ## 補完関数の設定
 ## 補完候補をカーソルで選択可能にする
 zstyle ':completion:*:default' menu select=1
-## _expand: グロブや変数を展開する
-## _complete: 通常の補完
-## _match: グロブでコマンドを補完する
-## _approximate: ミススペルを訂正して補完する
-## _history: 履歴から補完する
-zstyle ':completion:*' completer _expand _complete _match _approximate _history
 ## 補完候補をグルーピングして表示する
+zstyle ':completion:*' completer _expand _complete _match _approximate _history
+    # _expand: グロブや変数を展開する
+    # _complete: 通常の補完
+    # _match: グロブでコマンドを補完する
+    # _approximate: ミススペルを訂正して補完する
+    # _history: 履歴から補完する
 zstyle ':completion:*:descriptions' format $YELLOW'completing %B%d%b'$DEFAULT
 ## 自動入力されるカンマなどを適宜削除する
 setopt auto_param_keys
@@ -175,10 +184,6 @@ setopt nobeep
 setopt auto_cd
 ## cdの履歴を保存
 setopt auto_pushd
-
-### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
-
 
 # for debug
 #if (which zprof > /dev/null) ;then
