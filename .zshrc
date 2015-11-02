@@ -4,7 +4,7 @@
 # PATH
 PATH=/home/$USER/bin:$PATH
 # localのpipディレクトリにPATHを通す
-PATH=$PATH:$HOME/.local/bin/
+PATH=$PATH:$HOME/.local/bin
 ## サーバ個別のPATH設定をインポート
 if [ -f ~/.zshrc.path ]; then
     source ~/.zshrc.path
