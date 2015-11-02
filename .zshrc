@@ -188,7 +188,13 @@ setopt auto_cd
 setopt auto_pushd
 # pecoで履歴を検索する
 function peco-history-selection() {
-    BUFFER=`history -n 1 | tail -r  | awk '!a[$0]++' | peco`
+    cmd='tac'
+    case "${OSTYPE}" in
+        freebsd*|darwin*)
+        cmd='tail -r'
+        ;;
+    esac
+    BUFFER=`history -n 1 | $cmd | awk '!a[$0]++' | peco`
     CURSOR=$#BUFFER
     zle reset-prompt
 }
