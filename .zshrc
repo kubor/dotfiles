@@ -202,7 +202,10 @@ zle -N peco-history-selection
 if type peco >/dev/null 2>&1; then
     bindkey '^r' peco-history-selection
 fi
-
+# pecoでスニペットを読み込む
+function peco-snipets-loader() {
+    print -z `cat ~/.peco/snipet* | grep -v "^#" | peco`
+}
 # for debug
 #if (which zprof > /dev/null) ;then
 #      zprof | less
