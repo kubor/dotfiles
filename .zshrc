@@ -29,6 +29,7 @@ alias mv="mv -i"
 alias rm="rm -i"
 alias grep="grep --color=auto"
 alias egrep="egrep --color=auto"
+alias src="source ~/.zshrc"
 ## グローバルエイリアス
 alias -g L="| less"
 alias -g G="| grep"
@@ -199,13 +200,24 @@ function peco-history-selection() {
     zle reset-prompt
 }
 zle -N peco-history-selection
+# pecoでスニペットを読み込む
+function peco-snippets-loader() {
+    if ls ~/.peco.snippet* >/dev/null 2>&1; then
+        snippet=`cat ~/.peco.snippet* | grep -v "^#" | peco`
+        BUFFER="$(echo $snippet | sed -e 's/^\[.*\] *//') "
+        CURSOR=$#BUFFER
+    else
+        echo "~/.peco.snippet* is not found."
+    fi
+    zle reset-prompt
+}
+zle -N peco-snippets-loader
+
+# peco関係の関数をキーバインドに登録
 if type peco >/dev/null 2>&1; then
     bindkey '^r' peco-history-selection
+    bindkey '^x' peco-snippets-loader
 fi
-# pecoでスニペットを読み込む
-function peco-snipets-loader() {
-    print -z `cat ~/.peco/snipet* | grep -v "^#" | peco`
-}
 # for debug
 #if (which zprof > /dev/null) ;then
 #      zprof | less
