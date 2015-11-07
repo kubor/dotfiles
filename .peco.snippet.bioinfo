@@ -1,0 +1,21 @@
+#
+# file: .peco.snippets.bioinfo
+#
+
+# awk
+# bamtools
+# fastqc
+# grep
+[remove header] grep -v "^#"
+# perl
+# python
+# ruby
+# samtools
+[bam to sam] samtools view
+[sam to bam] samtools view -bS
+[sort bam] samtools sort
+[make fasta index] samtools faidx
+# sed
+# sort
+[sort BED file] sort -V -k1 -k2n
+
