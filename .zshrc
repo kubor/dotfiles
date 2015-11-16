@@ -192,7 +192,7 @@ function peco-history-selection() {
     cmd='tac'
     case "${OSTYPE}" in
         freebsd*|darwin*)
-        cmd='tail -r'
+            cmd=('tail' '-r')
         ;;
     esac
     BUFFER=`history -n 1 | $cmd | awk '!a[$0]++' | peco`
