@@ -47,9 +47,13 @@ set smartcase
 set incsearch
 "" 現在行番号をハイライトする
 set cursorline
+" カーソルを文字が存在しない場所でも移動可能にする
+set virtualedit=all
 hi clear CursorLine
 " Backspaceを有効にする
 set backspace=start,eol,indent
+" undo履歴を残すためにバッファを閉じる代わりに隠す
+set hidden
 " 前回終了した位置から編集を開始する
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\""
 
@@ -80,6 +84,9 @@ nnoremap <S-Up>    <C-w>-<CR>
 nnoremap <S-Down>  <C-w>+<CR>
 " w!! でroot権限で保存
 cmap w!! w !sudo tee > /dev/null %
+" 対応タグをタブで選択
+nnoremap <Tab> %
+vnoremap <Tab> %
 
 "------------------------"
 "      マクロの設定
@@ -108,7 +115,10 @@ endif
 " NeoBundle自身もNeoBundleで管理する
 NeoBundleFetch 'Shougo/neobundle.vim'
 "----- プラグイン
+"" unite-vim
 NeoBundle 'Shougo/unite.vim'
+"" vim-surround
+NeoBundle 'tpope/vim-surround'
 "" indentline
 NeoBundle 'Yggdroot/indentLine'
 "" monokai
@@ -138,11 +148,15 @@ NeoBundleLazy 'Shougo/neocomplete.vim', {
 " Djangoのサポート
 NeoBundleLazy "lambdalisue/vim-django-support", {
     \ "autoload": {
-	\ "filetypes": ["python", "python3", "djangohtml"]}}
+    \ "filetypes": ["python", "python3", "djangohtml"]}}
+" pep8-indent
+NeoBundleLazy 'hynek/vim-python-pep8-indent', {
+    \ "autoload": {
+    \ "insert": 1, "filetypes": ["python", "python3", "djangohtml"]}}
 " vim-virtualenv
 NeoBundleLazy "jmcantrell/vim-virtualenv", {
     \ "autoload": {
-	\ "filetypes": ["python", "python3", "djangohtml"]}}
+    \ "filetypes": ["python", "python3", "djangohtml"]}}
 " jedi-vim
 NeoBundleLazy "davidhalter/jedi-vim", {
     \ "autoload": {
@@ -152,6 +166,9 @@ function! s:hooks.on_source(bundle)
   autocmd FileType python setlocal omnifunc=jedi#completions
   let g:jedi#completions_enabled = 0
   let g:jedi#auto_vim_configuration = 0
+  let g:jedi#popup_select_first = 0
+  " quickrunとのキーマッピングが被るのでr -> Rに変更
+  let g:jedi#rename_command = '<Leader>R'
   if !exists('g:neocomplete#force_omni_input_patterns')
     let g:neocomplete#force_omni_input_patterns = {}
   endif
