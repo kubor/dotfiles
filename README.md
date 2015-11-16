@@ -15,5 +15,6 @@ dotfiles置き場
 ```bash
 $ cd ~/
 $ git clone https://github.com/K-Ryuichi/dotfiles.git
+$ cd dotfiles
 $ ./dotfilesLink.sh
 ```
