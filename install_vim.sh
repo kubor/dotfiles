@@ -11,6 +11,7 @@
 #           --enable-perlinterp
 #           --enable-pythoninterp
 #           --enable-python3interp
+#           --enable-rubyinterp
 #           --with-python-config-dir=/usr/lib64/python2.6/config
 #           --disable-gui
 #           --enable-fontset
@@ -37,6 +38,7 @@ cd vim
     --enable-pythoninterp \
     --enable-python3interp \
     --with-python-config-dir=/usr/lib64/python2.6/config \
+    --enable-rubyinterp \
     --disable-gui \
     --enable-fontset \
     &&
