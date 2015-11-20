@@ -87,6 +87,8 @@ cmap w!! w !sudo tee > /dev/null %
 " 対応タグをタブで選択
 nnoremap <Tab> %
 vnoremap <Tab> %
+" VimFilerを起動
+nnoremap <Space>f :VimFiler -split -simple -winwidth=40 -no-quit<Enter>
 
 "------------------------"
 "      マクロの設定
@@ -117,6 +119,8 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 "----- プラグイン
 "" unite-vim
 NeoBundle 'Shougo/unite.vim'
+"" VimFiler
+NeoBundle 'Shougo/vimfiler'
 "" vim-surround
 NeoBundle 'tpope/vim-surround'
 "" indentline
