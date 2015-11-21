@@ -27,6 +27,8 @@ set textwidth=0
 set colorcolumn=80
 " 行番号を表示
 set number
+autocmd colorscheme * hi LineNr ctermfg=8 ctermbg=0
+autocmd colorscheme * hi CursorLineNr ctermfg=41 ctermbg=0
 " 不可視文字を表示する
 "" 表示する文字を以下に変更
 set list
@@ -47,9 +49,9 @@ set smartcase
 set incsearch
 "" 現在行番号をハイライトする
 set cursorline
+hi clear CursorLine
 " カーソルを文字が存在しない場所でも移動可能にする
 set virtualedit=all
-hi clear CursorLine
 " Backspaceを有効にする
 set backspace=start,eol,indent
 " undo履歴を残すためにバッファを閉じる代わりに隠す
@@ -299,24 +301,24 @@ set showcmd
 set laststatus=2
 " lightlineプラグインの設定
 let g:lightline = {
-        \ 'colorscheme': 'wombat',
-        \ 'mode_map': {'c': 'NORMAL'},
-        \ 'active': {
-        \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
-        \ },
-        \ 'component_function': {
-        \   'modified': 'MyModified',
-        \   'readonly': 'MyReadonly',
-        \   'fugitive': 'MyFugitive',
-        \   'filename': 'MyFilename',
-        \   'fileformat': 'MyFileformat',
-        \   'filetype': 'MyFiletype',
-        \   'fileencoding': 'MyFileencoding',
-        \   'mode': 'MyMode'
-	\ },
-        \ 'separator': {'left':"\u2b80", 'right':"\u2b82"},
-        \ 'subseparator': {'left':"\u2b81", 'right':"\u2b83"}
-        \ }
+    \ 'colorscheme': 'wombat',
+    \ 'mode_map': {'c': 'NORMAL'},
+    \ 'active': {
+    \     'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
+    \ },
+    \ 'component_function': {
+    \   'modified': 'MyModified',
+    \   'readonly': 'MyReadonly',
+    \   'fugitive': 'MyFugitive',
+    \   'filename': 'MyFilename',
+    \   'fileformat': 'MyFileformat',
+    \   'filetype': 'MyFiletype',
+    \   'fileencoding': 'MyFileencoding',
+    \   'mode': 'MyMode'
+    \ },
+    \ 'separator': { 'left': '', 'right': '' },
+    \ 'subseparator': { 'left': '|', 'right': '|' }
+    \ }
 
 function! MyModified()
   return &ft =~ 'help\|vimfiler\|gundo' ?
