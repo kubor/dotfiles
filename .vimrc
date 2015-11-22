@@ -1,7 +1,6 @@
-"-----------------------------------------------------------------------------"
-"                                   .vimrc 
-"                               wrote by kubor
-"-----------------------------------------------------------------------------"
+"============================================================================="
+"                                 .vimrc kubor
+"============================================================================="
 
 "------------------------"
 "        基本設定
@@ -95,13 +94,13 @@ nnoremap <Space>f :VimFiler -split -simple -winwidth=40 -no-quit<Enter>
 "------------------------"
 " :eで開く際にフォルダが存在しない場合に自動作成する
 function! s:mkdir(dir, force)
-  if !isdirectory(a:dir) && (
-	\ a:force || input(printf(
-	\ '"%s" does not exist. Create? [y/N]', a:dir
-	\ )) =~? '^y\%[es]$'
-      \ )
-    call mkdir(iconv(a:dir, &encoding, &termencoding), 'p')
-  endif
+    if !isdirectory(a:dir) && (
+        \ a:force || input(printf(
+        \ '"%s" does not exist. Create? [y/N]', a:dir
+        \ )) =~? '^y\%[es]$'
+        \ )
+        call mkdir(iconv(a:dir, &encoding, &termencoding), 'p')
+    endif
 autocmd MyAutoCmd BufWritePre * call s:mkdir(expand('<afile>:p:h'), v:cmdbang)
 endfunction
 
@@ -111,8 +110,8 @@ endfunction
 filetype plugin indent off
 " NeoBundleで管理するディレクトリを指定
 if has('vim_starting')
-  set runtimepath+=~/dotfiles/.vim/neobundle/neobundle.vim
-  call neobundle#begin(expand('~/dotfiles/.vim/neobundle'))
+    set runtimepath+=~/dotfiles/.vim/neobundle/neobundle.vim
+    call neobundle#begin(expand('~/dotfiles/.vim/neobundle'))
 endif
 " NeoBundle自身もNeoBundleで管理する
 NeoBundleFetch 'Shougo/neobundle.vim'
@@ -167,18 +166,18 @@ NeoBundleLazy "davidhalter/jedi-vim", {
     \ "filetypes": ["python", "python3", "djangohtml"]}}
 let s:hooks = neobundle#get_hooks("jedi-vim")
 function! s:hooks.on_source(bundle)
-  autocmd FileType python setlocal omnifunc=jedi#completions
-  let g:jedi#completions_enabled = 0
-  let g:jedi#auto_vim_configuration = 0
-  let g:jedi#popup_select_first = 0
-  " quickrunとのキーマッピングが被るのでr -> Rに変更
-  let g:jedi#rename_command = '<Leader>R'
-  if !exists('g:neocomplete#force_omni_input_patterns')
-    let g:neocomplete#force_omni_input_patterns = {}
-  endif
+    autocmd FileType python setlocal omnifunc=jedi#completions
+    let g:jedi#completions_enabled = 0
+    let g:jedi#auto_vim_configuration = 0
+    let g:jedi#popup_select_first = 0
+    " quickrunとのキーマッピングが被るのでr -> Rに変更
+    let g:jedi#rename_command = '<Leader>R'
+    if !exists('g:neocomplete#force_omni_input_patterns')
+        let g:neocomplete#force_omni_input_patterns = {}
+    endif
 "  let g:neocomplete#force_omni_input_patterns.python = '\h\w\|[^. \t].\w'
-  let g:neocomplete#force_omni_input_patterns.python =
-    \ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
+    let g:neocomplete#force_omni_input_patterns.python =
+        \ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
 endfunction
 "----- NeoBundleの設定を終了
 call neobundle#end()
@@ -215,7 +214,7 @@ inoremap <expr><C-l> neocomplete#complete_common_string()
 " <CR>: close popup and save indent.
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function()
-  return neocomplete#close_popup() . "\<CR>"
+    return neocomplete#close_popup() . "\<CR>"
 endfunction
 " <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
@@ -237,7 +236,7 @@ autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 " Enable heavy omni completion.
 if !exists('g:neocomplete#sources#omni#input_patterns')
-  let g:neocomplete#sources#omni#input_patterns = {}
+    let g:neocomplete#sources#omni#input_patterns = {}
 endif
 
 " For perlomni.vim setting.
@@ -309,12 +308,12 @@ let g:lightline = {
     \ }
 
 function! MyModified()
-  return &ft =~ 'help\|vimfiler\|gundo' ?
-    \ '' : &modified ? '+' : &modifiable ? '' : '-'
+    return &ft =~ 'help\|vimfiler\|gundo' ?
+        \ '' : &modified ? '+' : &modifiable ? '' : '-'
 endfunction
 
 function! MyReadonly()
-  return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? 'x' : ''
+    return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? 'x' : ''
 endfunction
 
 function! MyFilename()
@@ -327,29 +326,29 @@ function! MyFilename()
 endfunction
 
 function! MyFugitive()
-  try
-    if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
-      return fugitive#head()
-    endif
-  catch
-  endtry
-  return ''
+    try
+        if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
+            return fugitive#head()
+        endif
+    catch
+        endtry
+        return ''
 endfunction
 
 function! MyFileformat()
-  return winwidth(0) > 70 ? &fileformat : ''
+    return winwidth(0) > 70 ? &fileformat : ''
 endfunction
 
 function! MyFiletype()
-  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+    return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
 endfunction
 
 function! MyFileencoding()
-  return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
+    return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
 endfunction
 
 function! MyMode()
-  return winwidth(0) > 60 ? lightline#mode() : ''
+    return winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
 
 "------------------------"
