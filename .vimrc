@@ -27,8 +27,6 @@ set textwidth=0
 set colorcolumn=80
 " 行番号を表示
 set number
-autocmd colorscheme * hi LineNr ctermfg=8 ctermbg=0
-autocmd colorscheme * hi CursorLineNr ctermfg=41 ctermbg=0
 " 不可視文字を表示する
 "" 表示する文字を以下に変更
 set list
@@ -279,18 +277,8 @@ if has('conceal')
 "------------------------"
 "  カラースキームの設定
 "------------------------"
-" iTerm2用
-let g:hybrid_use_iTerm_colors = 1
+set background=dark
 colorscheme hybrid
-if &term =~ "xterm-256color" || "screen-256color"
-  set t_Co=256
-  set t_Sf=[3%dm
-  set t_Sb=[4%dm
-elseif &term =~ "xterm-color"
-  set t_Co=8
-  set t_Sf=[3%dm
-  set t_Sb=[4%dm
-endif
 
 "------------------------"
 "   Status Lineの設定
