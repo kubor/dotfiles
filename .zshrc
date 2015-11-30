@@ -32,6 +32,7 @@ alias egrep="egrep --color=auto"
 alias src="source ~/.zshrc"
 if type ccat > /dev/null/ 2>&1; then
     alias cat="ccat"
+fi
 ## グローバルエイリアス
 alias -g L="| less"
 alias -g G="| grep"
