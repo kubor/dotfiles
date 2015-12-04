@@ -8,6 +8,7 @@
 # grep
 [remove header] grep -v "^#"
 # perl
+[print TSV header]perl -e 'for(split(/¥t/, )){$i++; print "$i $_¥n"}'
 # python
 # ruby
 # samtools
