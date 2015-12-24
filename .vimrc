@@ -179,6 +179,12 @@ function! s:hooks.on_source(bundle)
     let g:neocomplete#force_omni_input_patterns.python =
         \ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
 endfunction
+" vim-pyenv
+NeoBundleLazy "lambdalisue/vim-pyenv", {
+    \ "depends": ['davidhalter/jedi-vim'],
+    \ "autoload": {
+    \   "filetypes": ["python", "python3", "djangohtml"]
+    \ }}
 "----- NeoBundleの設定を終了
 call neobundle#end()
 filetype plugin indent on
