@@ -107,19 +107,17 @@ add-zsh-hook precmd _vcs_git_indicator
 
 function {
   local dir='%{%F{blue}%B%}%~%{%b%f%}'
-  local now='%{%F{yellow}%}%D{%b/%e(%a)%R}%{%f%}'
+  local now='%{%F{yellow}%}[%D{%b/%e(%a)%R}]%{%f%}'
   local rc="%(?,${emoji[ok]} ,${emoji[error]}  %{%F{red}%}%?%{%f%})"
-  local user='%{%F{green}%}%n@%{%f%}'
-  local host='%{%F{green}%}%m%{%f%}'
+  local user='%{%F{green}%}[%n@%{%f%}'
+  local host='%{%F{green}%}%m]%{%f%}'
   [ "$SSH_CLIENT" ] && local via="${${=SSH_CLIENT}[1]} %{%B%}${emoji[right_arrow]}%{%b%} "
   local git='$_vcs_git_indicator'
-  local mark=$'%# '
+  local mark=$'%{%F{blue}%B%}$ %{%f%}'
   local linebreak=$'\n'
   PROMPT="$user$via$host $mark"
   RPROMPT="$dir $rc $git $now"
 }
-# cdなしでディレクトリを移動する
-setopt auto_cd
 ## cdした後に自動的にlsする # import yonchu / chpwd_for_zsh.sh
 function chpwd() {
     ls_abbrev
@@ -190,6 +188,10 @@ setopt nobeep
 setopt auto_cd
 ## cdの履歴を保存
 setopt auto_pushd
+## 重複したcdの履歴は保存しない
+setopt pushd_ignore_dups
+## 3秒以上の処理は自動的に処理時間を表示
+REPORTTIME=3
 # pecoで履歴を検索する
 function peco-history-selection() {
     cmd='tac'
