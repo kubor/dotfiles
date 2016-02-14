@@ -185,6 +185,10 @@ NeoBundleLazy "lambdalisue/vim-pyenv", {
     \ "autoload": {
     \   "filetypes": ["python", "python3", "djangohtml"]
     \ }}
+" vim-coffee-script
+NeoBundleLazy 'kchmck/vim-coffee-script', {
+    \ "autoload": {
+    \ "insert": 1, "filetypes": ["coffee"]}}
 "----- NeoBundleの設定を終了
 call neobundle#end()
 filetype plugin indent on
@@ -360,5 +364,12 @@ endfunction
 "------------------------"
 " シンタックスハイライト
 "------------------------"
+" 256 color on screen
+if $TERM == 'screen'
+    set t_Co=256
+endif
+
 syntax enable
 au BufRead,BufNewFile {*.md,*.txt} set filetype=markdown
+au BufRead,BufNewFile {*.coffee} set filetype=coffee
+autocmd filetype coffee,javascript setlocal shiftwidth=2 softtabstop=2 tabstop=2 expandtab
