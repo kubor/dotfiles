@@ -42,6 +42,9 @@ fi
 if type htop > /dev/null 2>&1; then
     alias top="htop"
 fi
+## git 関係
+alias gst="git status -sb"
+alias gb="git branch -a"
 ## グローバルエイリアス
 alias -g L="| less"
 alias -g G="| grep"
