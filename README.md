@@ -1,5 +1,5 @@
 dotfiles
 ===
 
-Licence: MIT
+Licence: MIT  
 Description: dotfiles and install scripts

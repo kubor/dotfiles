@@ -28,7 +28,6 @@ fi
 # エイリアス設定
 alias vi="vim -u NONE --noplugin"
 alias awk="gawk"
-alias ls=ls_abbrev
 alias ll="ls -l"
 alias la="ls -a"
 alias mv="mv -i"
