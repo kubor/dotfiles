@@ -1,98 +1,105 @@
-"============================================================================="
-"                                 .vimrc kubor
-"============================================================================="
-
-"------------------------"
-"        基本設定
-"------------------------"
-" encoding
+" cute vim
 set encoding=utf-8
 scriptencoding utf-8
-" MyAutoCmdを初期化
-augroup MyAutoCmd
+
+" initialize vimrc
+augroup vimrc
   autocmd!
 augroup END
-" インデントの設定
+
+" indent
 set smartindent
 set autoindent
 set smarttab
 set shiftround
-" set font
-set guifont=Ricty\ 10
-" 折り返しの設定
-set wrap
-set linebreak
-set textwidth=0
-set colorcolumn=80
-" 行番号を表示
-set number
-" 不可視文字を表示する
-"" 表示する文字を以下に変更
-set list
-set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%,eol:↲
-" 括弧の強調表示
-set showmatch
-set matchtime=1
-"" '<'と'>'も強調表示
-set matchpairs& matchpairs+=<:>
-" TAB入力時の設定
+
+" TAB settings
 set expandtab
 set tabstop=8
 set shiftwidth=4
 set softtabstop=4
-" 検索時の設定
+
+" set font
+set guifont=Ricty\ 10
+
+" textwrap
+set wrap
+set linebreak
+set textwidth=0
+set colorcolumn=80
+
+" basic settings
+set number
+set list
+set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%,eol:↲
+set showmatch
+set matchtime=1
+set matchpairs& matchpairs+=<:>
+set cursorline
+hi clear CursorLine
+set virtualedit=all
+set backspace=start,eol,indent
+set hidden
+
+" mute
+set belloff=all
+
+" search settings
 set ignorecase
 set smartcase
 set incsearch
-"" 現在行番号をハイライトする
-set cursorline
-hi clear CursorLine
-" カーソルを文字が存在しない場所でも移動可能にする
-set virtualedit=all
-" Backspaceを有効にする
-set backspace=start,eol,indent
-" undo履歴を残すためにバッファを閉じる代わりに隠す
-set hidden
-" 前回終了した位置から編集を開始する
-au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\""
-
-"------------------------"
-"     キーマッピング
-"------------------------"
-" ESC連打で検索結果のハイライトを消す
 set hlsearch
+
+" status line
+set showcmd
+set laststatus=2
+
+set clipboard=unnamed
+
+set synmaxcol=120
+
+set splitbelow
+set splitright
+
+
+" key mapping
 nmap <silent> <Esc><Esc> :nohlsearch<CR><Esc>
-" jjをESCと同義にする
 inoremap jj <Esc>
-" 検索結果を画面中央に表示
+
+" zz with search result
 nnoremap n nzz
 nnoremap N Nzz
 nnoremap * *zz
 nnoremap # #zz
 nnoremap g* g*zz
 nnoremap g# g#zz
-" Ctrl + hjkl でウィンドウを移動
+
+" quick window move
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
-" Shift + 矢印でウィンドウサイズを変更
-nnoremap <S-Left>  <C-w><<CR>
-nnoremap <S-Right> <C-w>><CR>
-nnoremap <S-Up>    <C-w>-<CR>
-nnoremap <S-Down>  <C-w>+<CR>
-" w!! でroot権限で保存
+
+" change window size with Shift + cursor
+nnoremap <S-Left>  <C-w><
+nnoremap <S-Right> <C-w>>
+nnoremap <S-Up>    <C-w>-
+nnoremap <S-Down>  <C-w>+
+
+" save as root
 cmap w!! w !sudo tee > /dev/null %
-" 対応タグをタブで選択
+
+" move to pair tag
 nnoremap <Tab> %
 vnoremap <Tab> %
-" VimFilerを起動
+
+" launch VimFiler
 nnoremap <Space>f :VimFiler -split -simple -winwidth=30 -no-quit<Enter>
 
-"------------------------"
-"      マクロの設定
-"------------------------"
-" :eで開く際にフォルダが存在しない場合に自動作成する
+
+" macro
+
+" auto mkdir with :e
 function! s:mkdir(dir, force)
     if !isdirectory(a:dir) && (
         \ a:force || input(printf(
@@ -101,103 +108,104 @@ function! s:mkdir(dir, force)
         \ )
         call mkdir(iconv(a:dir, &encoding, &termencoding), 'p')
     endif
-autocmd MyAutoCmd BufWritePre * call s:mkdir(expand('<afile>:p:h'), v:cmdbang)
+autocmd vimrc BufWritePre * call s:mkdir(expand('<afile>:p:h'), v:cmdbang)
 endfunction
 
-"------------------------"
-"     NeoBundleの設定
-"------------------------"
+
+" for neovim
+
+" enable python3
+let g:python3_host_prog = 'python3'
+
+
+" neobundle settigns ----------------------------------------------------------
 filetype plugin indent off
-" NeoBundleで管理するディレクトリを指定
+
+" specify the NeoBundle dir
 if has('vim_starting')
     set runtimepath+=~/dotfiles/.vim/neobundle/neobundle.vim
     call neobundle#begin(expand('~/dotfiles/.vim/neobundle'))
 endif
-" NeoBundle自身もNeoBundleで管理する
+
 NeoBundleFetch 'Shougo/neobundle.vim'
-"----- プラグイン
-"" unite-vim
 NeoBundle 'Shougo/unite.vim'
-"" VimFiler
 NeoBundle 'Shougo/vimfiler'
-"" vim-surround
 NeoBundle 'tpope/vim-surround'
-"" indentline
 NeoBundle 'Yggdroot/indentLine'
-"" monokai
-NeoBundle 'sickill/vim-monokai'
-"" hybrid
 NeoBundle 'w0ng/vim-hybrid'
-"" vim-perl
 NeoBundle 'vim-perl/vim-perl'
-"" lightlinet
 NeoBundle 'itchyny/lightline.vim'
-"" vim-tamplate
 NeoBundle "thinca/vim-template"
-"" vim-quickrun
 NeoBundle "thinca/vim-quickrun"
-"" snipets
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/neosnippet-snippets'
-"" perldoc.vim
 NeoBundle 'hotchpotch/perldoc-vim'
-"" syntastic
 NeoBundle 'scrooloose/syntastic'
-let g:syntastic_python_checkers = ['flake8']
+NeoBundle 'haya14busa/incsearch.vim'
 
-""----- 遅延モードでロードするプラグイン
-NeoBundleLazy 'Shougo/neocomplete.vim', {
-    \ "autoload": {"insert": 1}}
-" Djangoのサポート
+" lazy loading plugins
+if has('nvim')
+    NeoBundleLazy 'Shougo/deoplete.nvim', {
+        \ "autoload": {"insert":1}}
+    let s:hooks = neobundle#get_hooks("deoplete.nvim")
+    function! s:hooks.on_source(bundle)
+        let g:deoplete#enable_at_startup = 1
+    endfunction
+else
+    NeoBundleLazy 'Shougo/neocomplete.vim', {
+        \ "autoload": {"insert": 1}}
+    let s:hooks = neobundle#get_hooks("neocomplete.vim")
+    function! s:hooks.on_source(bundle)
+        let g:neocomplete#enable_smart_case = 1
+        let g:neocomplete#enable_at_startup = 1
+    endfunction
+endif
+
 NeoBundleLazy "lambdalisue/vim-django-support", {
     \ "autoload": {
     \ "filetypes": ["python", "python3", "djangohtml"]}}
-" pep8-indent
 NeoBundleLazy 'hynek/vim-python-pep8-indent', {
     \ "autoload": {
     \ "insert": 1, "filetypes": ["python", "python3", "djangohtml"]}}
-" vim-virtualenv
 NeoBundleLazy "jmcantrell/vim-virtualenv", {
     \ "autoload": {
     \ "filetypes": ["python", "python3", "djangohtml"]}}
-" jedi-vim
 NeoBundleLazy "davidhalter/jedi-vim", {
     \ "autoload": {
     \ "filetypes": ["python", "python3", "djangohtml"]}}
+NeoBundleLazy "lambdalisue/vim-pyenv", {
+    \ "depends": ['davidhalter/jedi-vim'],
+    \ "autoload": {
+    \   "filetypes": ["python", "python3", "djangohtml"]}}
+NeoBundleLazy 'kchmck/vim-coffee-script', {
+    \ "autoload": {
+    \ "insert": 1, "filetypes": ["coffee"]}}
+
 let s:hooks = neobundle#get_hooks("jedi-vim")
 function! s:hooks.on_source(bundle)
-    autocmd FileType python setlocal omnifunc=jedi#completions
+    autocmd vimrc FileType python setlocal omnifunc=jedi#completions
     let g:jedi#completions_enabled = 0
     let g:jedi#auto_vim_configuration = 0
     let g:jedi#popup_select_first = 0
-    " quickrunとのキーマッピングが被るのでr -> Rに変更
+    " resolve keymap duplicate with vim-quickrun
     let g:jedi#rename_command = '<Leader>R'
     if !exists('g:neocomplete#force_omni_input_patterns')
         let g:neocomplete#force_omni_input_patterns = {}
     endif
-"  let g:neocomplete#force_omni_input_patterns.python = '\h\w\|[^. \t].\w'
     let g:neocomplete#force_omni_input_patterns.python =
         \ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
 endfunction
-" vim-pyenv
-NeoBundleLazy "lambdalisue/vim-pyenv", {
-    \ "depends": ['davidhalter/jedi-vim'],
-    \ "autoload": {
-    \   "filetypes": ["python", "python3", "djangohtml"]
-    \ }}
-" vim-coffee-script
-NeoBundleLazy 'kchmck/vim-coffee-script', {
-    \ "autoload": {
-    \ "insert": 1, "filetypes": ["coffee"]}}
-"----- NeoBundleの設定を終了
+
 call neobundle#end()
 filetype plugin indent on
-"" 未インストールのプラグインを起動時に通知
+
 NeoBundleCheck
 
-"------------------------"
-"    neocompleteの設定
-"------------------------"
+" neobundle settings ----------------------------------------------------------
+
+
+" neocomplete settigns --------------------------------------------------------
+
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
 " Use neocomplete.
@@ -233,16 +241,14 @@ inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><C-y>  neocomplete#close_popup()
 inoremap <expr><C-e>  neocomplete#cancel_popup()
-" Close popup by <Space>.
-"inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
 " Close popup by <Enter>.
 inoremap <expr><CR> pumvisible() ? neocomplete#close_popup() : "\<CR>"
 
 " Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+autocmd vimrc FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd vimrc FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd vimrc FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd vimrc FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 " Enable heavy omni completion.
 if !exists('g:neocomplete#sources#omni#input_patterns')
@@ -253,27 +259,32 @@ endif
 " https://github.com/c9s/perlomni.vim
 let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
-"------------------------"
-"   vim-templateの設定
-"------------------------"
-" テンプレート読み込み時に日付などを差し替える
-autocmd MyAutoCmd User plugin-template-loaded call s:template_keywords()
+" end of neocomplete settings -------------------------------------------------
+
+
+" incsearch settigns
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+
+
+" template settigns
+autocmd vimrc User plugin-template-loaded call s:template_keywords()
 function! s:template_keywords()
     silent! %s/<+DATE+>/\=strftime('%Y-%m-%d')/g
     silent! %s/<+FILENAME+>/\=expand('%:r')/g
 endfunction
-" テンプレート中に含まれる'<+CURSOR+>'にカーソルを移動
-autocmd MyAutoCmd User plugin-template-loaded
+
+" move cursor to '<+CURSOR+>' in template
+autocmd vimrc User plugin-template-loaded
     \ if search('<+CURSOR+>')
     \ | silent! execute 'normal! "_da>'
     \ | endif
 
-"------------------------"
-"    スニペットの設定
-"------------------------"
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
+" snipets settings
+imap <C-k>      <Plug>(neosnippet_expand_or_jump)
+smap <C-k>      <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>      <Plug>(neosnippet_expand_target)
 imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
     \ "\<Plug>(neosnippet_expand_or_jump)": pumvisible() ?
     \ "\<C-n>" : "\<TAB>"
@@ -283,20 +294,8 @@ if has('conceal')
   set conceallevel=2 concealcursor=i
   endif
 
-"------------------------"
-"  カラースキームの設定
-"------------------------"
-set background=dark
-colorscheme hybrid
 
-"------------------------"
-"   Status Lineの設定
-"------------------------"
-" ステータスラインにコマンドを表示
-set showcmd
-" ステータスラインを常に表示
-set laststatus=2
-" lightlineプラグインの設定
+" status line settigns
 let g:lightline = {
     \ 'colorscheme': 'wombat',
     \ 'mode_map': {'c': 'NORMAL'},
@@ -361,15 +360,28 @@ function! MyMode()
     return winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
 
-"------------------------"
-" シンタックスハイライト
-"------------------------"
+
+" use flake8 for python lint checker
+let g:syntastic_python_checkers = ['flake8']
+
+
+" syntastic highlight
+
 " 256 color on screen
 if $TERM == 'screen'
     set t_Co=256
 endif
 
+" set colorscheme
+set background=dark
+colorscheme hybrid
 syntax enable
+
+" filetype settings
 au BufRead,BufNewFile {*.md,*.txt} set filetype=markdown
 au BufRead,BufNewFile {*.coffee} set filetype=coffee
 autocmd filetype coffee,javascript setlocal shiftwidth=2 softtabstop=2 tabstop=2 expandtab
+
+
+" open with last cursor position
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\""
