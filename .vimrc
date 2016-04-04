@@ -1,3 +1,12 @@
+" __________
+"< my vimrc >
+" ----------
+"        \   ^__^
+"         \  (oo)\_______
+"            (__)\       )\/\
+"                ||----w |
+"                ||     ||
+"
 " cute vim
 set encoding=utf-8
 scriptencoding utf-8
