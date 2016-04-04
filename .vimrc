@@ -127,7 +127,7 @@ endfunction
 let g:python3_host_prog = 'python3'
 
 
-" neobundle settigns ----------------------------------------------------------
+" neobundle settings ----------------------------------------------------------
 filetype plugin indent off
 
 " specify the NeoBundle dir
