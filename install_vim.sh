@@ -26,8 +26,13 @@ else
 fi
 pwd
 
-git clone https://github.com/vim/vim.git &&
-cd vim
+if [ ! -d "${HOME}/src/vim" ]; then
+    git clone https://github.com/vim/vim.git && cd vim
+else
+    cd vim
+    git pull
+fi
+
 ./configure \
     --prefix=$HOME \
     --enable-multibyte \
@@ -37,7 +42,7 @@ cd vim
     --enable-perlinterp \
     --enable-pythoninterp \
     --enable-python3interp \
-    --with-python-config-dir=/usr/lib64/python2.6/config \
+    --with-python-config-dir=${HOME}/.pyenv/shims \
     --enable-rubyinterp \
     --disable-gui \
     --enable-fontset \
