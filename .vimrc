@@ -151,6 +151,7 @@ NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundle 'hotchpotch/perldoc-vim'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'haya14busa/incsearch.vim'
+NeoBundle 'tpope/vim-fugitive'
 
 " lazy loading plugins
 if has('nvim')
