@@ -105,7 +105,6 @@ vnoremap <Tab> %
 " launch VimFiler
 nnoremap <Space>f :VimFiler -split -simple -winwidth=30 -no-quit<Enter>
 
-
 " macro
 
 " auto mkdir with :e
@@ -120,163 +119,53 @@ function! s:mkdir(dir, force)
 autocmd vimrc BufWritePre * call s:mkdir(expand('<afile>:p:h'), v:cmdbang)
 endfunction
 
-
 " for neovim
 
 " enable python3
 let g:python3_host_prog = 'python3'
 
+" dein settings -----------------------------------------------------------
+" plugin install directory
+let s:cache_home = empty($XDG_CACHE_HOME) ? expand('~/.cache') : $XDG_CACHE_HOME
+let s:dein_dir = s:cache_home . '/dein'
 
-" neobundle settings ----------------------------------------------------------
-filetype plugin indent off
+let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 
-" specify the NeoBundle dir
-if has('vim_starting')
-    set runtimepath+=~/dotfiles/.vim/neobundle/neobundle.vim
-    call neobundle#begin(expand('~/dotfiles/.vim/neobundle'))
-endif
-
-NeoBundleFetch 'Shougo/neobundle.vim'
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/vimfiler'
-NeoBundle 'tpope/vim-surround'
-NeoBundle 'Yggdroot/indentLine'
-NeoBundle 'w0ng/vim-hybrid'
-NeoBundle 'vim-perl/vim-perl'
-NeoBundle 'itchyny/lightline.vim'
-NeoBundle "thinca/vim-template"
-NeoBundle "thinca/vim-quickrun"
-NeoBundle 'Shougo/neosnippet'
-NeoBundle 'Shougo/neosnippet-snippets'
-NeoBundle 'hotchpotch/perldoc-vim'
-NeoBundle 'scrooloose/syntastic'
-NeoBundle 'haya14busa/incsearch.vim'
-NeoBundle 'tpope/vim-fugitive'
-
-" lazy loading plugins
-if has('nvim')
-    NeoBundleLazy 'Shougo/deoplete.nvim', {
-        \ "autoload": {"insert":1}}
-    let s:hooks = neobundle#get_hooks("deoplete.nvim")
-    function! s:hooks.on_source(bundle)
-        let g:deoplete#enable_at_startup = 1
-    endfunction
-else
-    NeoBundleLazy 'Shougo/neocomplete.vim', {
-        \ "autoload": {"insert": 1}}
-    let s:hooks = neobundle#get_hooks("neocomplete.vim")
-    function! s:hooks.on_source(bundle)
-        let g:neocomplete#enable_smart_case = 1
-        let g:neocomplete#enable_at_startup = 1
-    endfunction
-endif
-
-NeoBundleLazy "lambdalisue/vim-django-support", {
-    \ "autoload": {
-    \ "filetypes": ["python", "python3", "djangohtml"]}}
-NeoBundleLazy 'hynek/vim-python-pep8-indent', {
-    \ "autoload": {
-    \ "insert": 1, "filetypes": ["python", "python3", "djangohtml"]}}
-NeoBundleLazy "jmcantrell/vim-virtualenv", {
-    \ "autoload": {
-    \ "filetypes": ["python", "python3", "djangohtml"]}}
-NeoBundleLazy "davidhalter/jedi-vim", {
-    \ "autoload": {
-    \ "filetypes": ["python", "python3", "djangohtml"]}}
-NeoBundleLazy "lambdalisue/vim-pyenv", {
-    \ "depends": ['davidhalter/jedi-vim'],
-    \ "autoload": {
-    \   "filetypes": ["python", "python3", "djangohtml"]}}
-NeoBundleLazy 'kchmck/vim-coffee-script', {
-    \ "autoload": {
-    \ "insert": 1, "filetypes": ["coffee"]}}
-
-let s:hooks = neobundle#get_hooks("jedi-vim")
-function! s:hooks.on_source(bundle)
-    autocmd vimrc FileType python setlocal omnifunc=jedi#completions
-    let g:jedi#completions_enabled = 0
-    let g:jedi#auto_vim_configuration = 0
-    let g:jedi#popup_select_first = 0
-    " resolve keymap duplicate with vim-quickrun
-    let g:jedi#rename_command = '<Leader>R'
-    if !exists('g:neocomplete#force_omni_input_patterns')
-        let g:neocomplete#force_omni_input_patterns = {}
+" download dein.vim if it not installed
+if &runtimepath !~# '/dein.vim'
+    if !isdirectory(s:dein_repo_dir)
+        execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo_dir
     endif
-    let g:neocomplete#force_omni_input_patterns.python =
-        \ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
-endfunction
+    execute 'set runtimepath^=' . fnamemodify(s:dein_repo_dir, ':p')
+endif
 
-call neobundle#end()
+" load TOML file listed plugins
+let g:rc_dir = expand('~/.vim/rc')
+let s:toml = g:rc_dir . '/dein.toml'
+
+"" start dein settings
+if dein#load_state(s:dein_dir)
+    call dein#begin(s:dein_dir, [$MYVIMRC, s:toml])
+    call dein#load_toml(s:toml)
+    call dein#end()
+    call dein#save_state()
+endif
+
+"" auto install plugins not installed
+if dein#check_install(['vimproc'])
+    call dein#install(['vimproc'])
+endif
+
+if has('vim_starting') && dein#check_install()
+    call dein#install()
+endif
+
 filetype plugin indent on
-
-NeoBundleCheck
-
-" neobundle settings ----------------------------------------------------------
-
-
-" neocomplete settigns --------------------------------------------------------
-
-" Disable AutoComplPop.
-let g:acp_enableAtStartup = 0
-" Use neocomplete.
-let g:neocomplete#enable_at_startup = 1
-" Use smartcase.
-let g:neocomplete#enable_smart_case = 1
-" Set minimum syntax keyword length.
-let g:neocomplete#sources#syntax#min_keyword_length = 3
-let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-" Define dictionary.
-let g:neocomplete#sources#dictionary#dictionaries = {
-    \ 'default': '',
-    \ 'vimshell': $HOME.'/.vimshell_hist',
-    \ 'scheme': $HOME.'/.gosh_completions'}
-" Define keyword.
-if !exists('g:neocomplete#keyword_patterns')
-    let g:neocomplete#keyword_patterns = {}
-endif
-let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-" Plugin key-mappings.
-inoremap <expr><C-g> neocomplete#undo_completion()
-inoremap <expr><C-l> neocomplete#complete_common_string()
-" Recommended key-mappings.
-" <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-    return neocomplete#close_popup() . "\<CR>"
-endfunction
-" <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><C-y>  neocomplete#close_popup()
-inoremap <expr><C-e>  neocomplete#cancel_popup()
-" Close popup by <Enter>.
-inoremap <expr><CR> pumvisible() ? neocomplete#close_popup() : "\<CR>"
-
-" Enable omni completion.
-autocmd vimrc FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd vimrc FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd vimrc FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd vimrc FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-" Enable heavy omni completion.
-if !exists('g:neocomplete#sources#omni#input_patterns')
-    let g:neocomplete#sources#omni#input_patterns = {}
-endif
-
-" For perlomni.vim setting.
-" https://github.com/c9s/perlomni.vim
-let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-
-" end of neocomplete settings -------------------------------------------------
-
 
 " incsearch settigns
 map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
-
 
 " template settigns
 autocmd vimrc User plugin-template-loaded call s:template_keywords()
@@ -290,41 +179,6 @@ autocmd vimrc User plugin-template-loaded
     \ if search('<+CURSOR+>')
     \ | silent! execute 'normal! "_da>'
     \ | endif
-
-" snipets settings
-imap <C-k>      <Plug>(neosnippet_expand_or_jump)
-smap <C-k>      <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>      <Plug>(neosnippet_expand_target)
-imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-    \ "\<Plug>(neosnippet_expand_or_jump)": pumvisible() ?
-    \ "\<C-n>" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-    \ "\<Plug>(neosnippet_expand_or_jump)": "\<TAB>"
-if has('conceal')
-  set conceallevel=2 concealcursor=i
-  endif
-
-
-" status line settigns
-let g:lightline = {
-    \ 'colorscheme': 'wombat',
-    \ 'mode_map': {'c': 'NORMAL'},
-    \ 'active': {
-    \     'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
-    \ },
-    \ 'component_function': {
-    \   'modified': 'MyModified',
-    \   'readonly': 'MyReadonly',
-    \   'fugitive': 'MyFugitive',
-    \   'filename': 'MyFilename',
-    \   'fileformat': 'MyFileformat',
-    \   'filetype': 'MyFiletype',
-    \   'fileencoding': 'MyFileencoding',
-    \   'mode': 'MyMode'
-    \ },
-    \ 'separator': { 'left': '', 'right': '' },
-    \ 'subseparator': { 'left': '|', 'right': '|' }
-    \ }
 
 function! MyModified()
     return &ft =~ 'help\|vimfiler\|gundo' ?
@@ -370,10 +224,8 @@ function! MyMode()
     return winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
 
-
 " use flake8 for python lint checker
 let g:syntastic_python_checkers = ['flake8']
-
 
 " syntastic highlight
 
@@ -391,7 +243,6 @@ syntax enable
 au BufRead,BufNewFile {*.md,*.txt} set filetype=markdown
 au BufRead,BufNewFile {*.coffee} set filetype=coffee
 autocmd filetype coffee,javascript setlocal shiftwidth=2 softtabstop=2 tabstop=2 expandtab
-
 
 " open with last cursor position
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\""

@@ -50,6 +50,13 @@ fi
 
 make; make install
 
+if [ -n "$HOME/.vim/dein" ]; then
+    mkdir -p ~/.vim/dein/repos/github.com/Shougo/dein.vim
+fi
+
+git clone https://github.com/Shougo/dein.vim.git \
+    ~/.vim/dein/repos/github.com/Shougo/dein.vim
+
 echo "please check your PATH ordar."
 echo "recommended settings:"
 echo "   zsh; echo \"PATH=\$HOME/bin:\$PATH\" >> ~/.zshrc"
