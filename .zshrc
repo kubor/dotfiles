@@ -1,29 +1,40 @@
-# --------------------------------------------------------------------------- #
-#                                  .zshrc                                     #
-# --------------------------------------------------------------------------- #
+# _________________________________
+#< Life is like a box of chocolate >
+# ---------------------------------
+#        \   ^__^
+#         \  (oo)\_______
+#            (__)\       )\/\
+#                ||----w |
+#                ||     ||
+
 # PATH
 PATH=/home/$USER/bin:$PATH
 # localのpipディレクトリにPATHを通す
 PATH=$PATH:$HOME/.local/bin
+
+# Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
+export PATH="/usr/local/bin:$PATH"
+
+# anyenv path
+export PATH="$HOME/.anyenv/bin:$PATH"
+
+# set paths for terminal multiprexa(tmux)
+# cf. http://monmon.hateblo.jp/entry/2013/12/13/233242
+for dir in `ls $HOME/.anyenv/envs`
+do
+    export PATH="$HOME/.anyenv/envs/$dir/shims:$PATH"
+done
+
 ## サーバ個別のPATH設定をインポート
 if [ -f ~/.zshrc.path ]; then
     source ~/.zshrc.path
 fi
 # LANG
 export LANG=ja_JP.UTF-8
-# rbenv | pyenv の初期化
-if type rbenv >/dev/null 2>&1; then
-    eval "$(rbenv init - --no-rehash)"
-    eval "$(rbenv virtualenv-init - --no-rehash)"
-fi
-if type pyenv >/dev/null 2>&1; then
-    eval "$(pyenv init - --no-rehash)"
-    eval "$(pyenv virtualenv-init - --no-rehash)"
-fi
-if type go >/dev/null 2>&1; then
-    export PATH=$PATH:/usr/local/opt/go/libexec/bin
-    export GOPATH=$HOME/go
-    export PATH=$PATH:$GOPATH/bin
+## anyenv の初期化
+if type anyenv >/dev/null 2>&1; then
+    eval "$(anyenv init -)"
 fi
 # エイリアス設定
 alias vi="vim -u NONE --noplugin"
