@@ -19,3 +19,6 @@ fi
 
 ln -sf ~/dotfiles/.vimrc ~/.config/nvim/init.vim
 ln -sf ~/dotfiles/.vim ~/.config/nvim/
+
+# install zplug
+curl -sL get.zplug.sh | zsh

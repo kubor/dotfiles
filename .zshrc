@@ -7,6 +7,13 @@
 #                ||----w |
 #                ||     ||
 
+# zplug init
+if [[ ! -d ~/.zplug ]]; then
+    git clone https://github.com/zplug/zplug ~/.zplug
+    source ~/.zplug/init.zsh && zplug update --self
+fi
+source ~/.zplug/init.zsh
+
 # PATH
 PATH=/home/$USER/bin:$PATH
 # localのpipディレクトリにPATHを通す
@@ -52,9 +59,12 @@ fi
 if type htop > /dev/null 2>&1; then
     alias top="htop"
 fi
+
 ## git 関係
 alias gst="git status -sb"
 alias gb="git branch -a"
+alias co="git checkout"
+
 ## グローバルエイリアス
 alias -g L="| less"
 alias -g G="| grep"
@@ -94,42 +104,42 @@ setopt hist_ignore_space
 # プロンプトが表示されるたびにプロンプト文字列を評価、置換する
 setopt PROMPT_SUBST
 # gitのステータスをプロンプトに表示する
-# imported from http://int128.hatenablog.com/entry/2015/07/15/003851
-autoload -Uz add-zsh-hook
-
-function _vcs_git_indicator() {
-  typeset -A git_info
-  local git_indicator git_status
-  git_status=("${(f)$(git status --porcelain --branch 2> /dev/null)}")
-  (( $? == 0 )) && {
-    git_info[branch]="${${git_status[1]}#\#\# }"
-    shift git_status
-    git_info[changed]=${#git_status:#\?\?*}
-    git_info[untracked]=$(($#git_status - ${git_info[changed]}))
-    git_info[clean]=$(($#git_status == 0))
-
-    git_indicator=("%{%F{blue}%}${git_info[branch]}%{%f%}")
-    ((${git_info[clean]})) && git_indicator+=("%{%F{}%}clean%{%f%}")
-    ((${git_info[changed]})) && git_indicator+=("%{%F{yellow}%}${git_info[changed]} changed%{%f%}")
-    ((${git_info[untracked]})) && git_indicator+=("%{%F{red}%}${git_info[untracked]} untracked%{%f%}")
-  }
-  _vcs_git_indicator="${git_indicator}"
-}
-
-add-zsh-hook precmd _vcs_git_indicator
-
-function {
-  local dir='%{%F{blue}%B%}%~%{%b%f%}'
-  local rc="%(?, , %{%F{red}%}%?%{%f%})"
-  local user='%{%F{green}%}[%n@%{%f%}'
-  local host='%{%F{green}%}%m]%{%f%}'
-  [ "$SSH_CLIENT" ] && local via="${${=SSH_CLIENT}[1]} %{%B%}>>>%{%b%} "
-  local git='$_vcs_git_indicator'
-  local mark=$'%{%F{blue}%B%}$ %{%f%}'
-  local linebreak=$'\n'
-  PROMPT="$user$via$host $mark"
-  RPROMPT="$dir $rc $git"
-}
+## imported from http://int128.hatenablog.com/entry/2015/07/15/003851
+#autoload -Uz add-zsh-hook
+#
+#function _vcs_git_indicator() {
+#  typeset -A git_info
+#  local git_indicator git_status
+#  git_status=("${(f)$(git status --porcelain --branch 2> /dev/null)}")
+#  (( $? == 0 )) && {
+#    git_info[branch]="${${git_status[1]}#\#\# }"
+#    shift git_status
+#    git_info[changed]=${#git_status:#\?\?*}
+#    git_info[untracked]=$(($#git_status - ${git_info[changed]}))
+#    git_info[clean]=$(($#git_status == 0))
+#
+#    git_indicator=("%{%F{blue}%}${git_info[branch]}%{%f%}")
+#    ((${git_info[clean]})) && git_indicator+=("%{%F{}%}clean%{%f%}")
+#    ((${git_info[changed]})) && git_indicator+=("%{%F{yellow}%}${git_info[changed]} changed%{%f%}")
+#    ((${git_info[untracked]})) && git_indicator+=("%{%F{red}%}${git_info[untracked]} untracked%{%f%}")
+#  }
+#  _vcs_git_indicator="${git_indicator}"
+#}
+#
+#add-zsh-hook precmd _vcs_git_indicator
+#
+#function {
+#  local dir='%{%F{blue}%B%}%~%{%b%f%}'
+#  local rc="%(?, , %{%F{red}%}%?%{%f%})"
+#  local user='%{%F{green}%}[%n@%{%f%}'
+#  local host='%{%F{green}%}%m]%{%f%}'
+#  [ "$SSH_CLIENT" ] && local via="${${=SSH_CLIENT}[1]} %{%B%}>>>%{%b%} "
+#  local git='$_vcs_git_indicator'
+#  local mark=$'%{%F{blue}%B%}$ %{%f%}'
+#  local linebreak=$'\n'
+#  PROMPT="$user$via$host $mark"
+#  RPROMPT="$dir $rc $git"
+#}
 ## cdした後に自動的にlsする # import yonchu / chpwd_for_zsh.sh
 function chpwd() {
     ls_abbrev
@@ -167,8 +177,6 @@ ls_abbrev() {
     fi
 }
 # 補完
-## zsh-competionsの読み込み
-fpath=(/usr/local/share/zsh-completions $fpath)
 ## 補完機能を有効にする
 autoload -Uz compinit
 compinit -C
@@ -235,6 +243,27 @@ if type peco >/dev/null 2>&1; then
     bindkey '^r' peco-history-selection
     bindkey '^x' peco-snippets-loader
 fi
+
+# zplug plugins
+
+zplug "zplug/zplug"
+zplug "mafredri/zsh-async", on:sindresorhus/pure
+zplug "sindresorhus/pure", use:pure.zsh
+zplug "zsh-users/zsh-completions"
+zplug "zsh-users/zsh-syntax-highlighting"
+zplug "supercrabtree/k"
+
+# Install plugins if there are plugins that have not been installed
+if ! zplug check --verbose; then
+    printf "Install? [y/N]: "
+    if read -q; then
+        echo; zplug install
+    fi
+fi
+
+# Then, source plugins and add commands to $PATH
+zplug load --verbose
+
 # for debug
 #if (which zprof > /dev/null) ;then
 #      zprof | less
