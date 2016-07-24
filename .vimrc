@@ -224,9 +224,6 @@ function! MyMode()
     return winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
 
-" use flake8 for python lint checker
-let g:syntastic_python_checkers = ['flake8']
-
 " syntastic highlight
 
 " 256 color on screen
@@ -234,13 +231,9 @@ if $TERM == 'screen'
     set t_Co=256
 endif
 
-" set colorscheme
-set background=dark
-colorscheme hybrid
 syntax enable
 
 " filetype settings
-au BufRead,BufNewFile {*.md,*.txt} set filetype=markdown
 au BufRead,BufNewFile {*.coffee} set filetype=coffee
 autocmd filetype coffee,javascript setlocal shiftwidth=2 softtabstop=2 tabstop=2 expandtab
 
