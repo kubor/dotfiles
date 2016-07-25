@@ -271,3 +271,7 @@ on_ft = ['html', 'css', 'php']
 [[plugins]]
 repo = 'hail2u/vim-css3-syntax'
 on_ft = ['html', 'css', 'php']
+
+[[plugins]]
+repo = 'JuliaLang/julia-vim'
+
