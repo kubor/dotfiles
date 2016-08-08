@@ -222,9 +222,8 @@ let g:neocomplete#force_omni_input_patterns.python =
 
 [[plugins]]
 repo = 'lambdalisue/vim-pyenv'
-on_i = 1
-depends = 'jedi-vim'
 on_ft = ['python', 'python3', 'djangohtml']
+depends = 'jedi-vim'
 hook_post_source = '''
 if jedi#init_python()
     function! s:jedi_auto_force_py_version() abort
@@ -253,6 +252,9 @@ repo = 'rcmdnk/vim-markdown'
 on_ft = ['markdown', 'mkd']
 
 [[plugins]]
+repo = 'Konfekt/FastFold'
+
+[[plugins]]
 repo = 'cespare/vim-toml'
 on_ft = 'toml'
 
@@ -275,3 +277,6 @@ on_ft = ['html', 'css', 'php']
 [[plugins]]
 repo = 'JuliaLang/julia-vim'
 
+[[plugins]]
+repo = 'vim-scripts/Vim-R-plugin'
+on_ft = ['R']

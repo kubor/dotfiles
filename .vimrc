@@ -65,7 +65,7 @@ set laststatus=2
 
 set clipboard=unnamed
 
-set synmaxcol=120
+set synmaxcol=200
 
 set splitbelow
 set splitright

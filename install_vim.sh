@@ -37,12 +37,10 @@ fi
     --prefix=$HOME \
     --enable-multibyte \
     --with-features=huge \
-    --enable-python-interp \
     --enable-luainterp \
     --enable-perlinterp \
-    --enable-pythoninterp \
-    --enable-python3interp \
-    --with-python-config-dir=${HOME}/.pyenv/shims \
+    --enable-pythoninterp=dynamic \
+    --enable-python3interp=dynamic \
     --enable-rubyinterp \
     --disable-gui \
     --enable-fontset \

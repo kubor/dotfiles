@@ -17,7 +17,7 @@ source ~/.zplug/init.zsh
 # PATH
 PATH=/home/$USER/bin:$PATH
 # localのpipディレクトリにPATHを通す
-PATH=$PATH:$HOME/.local/bin
+PATH=$HOME/.local/bin:$PATH
 
 # Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
@@ -252,6 +252,7 @@ zplug "sindresorhus/pure", use:pure.zsh
 zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-syntax-highlighting"
 zplug "supercrabtree/k"
+zplug "mollifier/cd-gitroot"
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
