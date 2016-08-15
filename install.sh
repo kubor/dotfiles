@@ -11,6 +11,7 @@ if [ -n $rc_dir ]; then
 fi
 
 ln -sf ~/dotfiles/rc/dein.toml ~/.vim/rc/dein.toml
+
 # for neovim config
 if [ ! -e "${HOME}/.config/nvim" ]; then
     echo "mkdir -p ${HOME}/.config/nvim"
@@ -19,6 +20,9 @@ fi
 
 ln -sf ~/dotfiles/.vimrc ~/.config/nvim/init.vim
 ln -sf ~/dotfiles/.vim ~/.config/nvim/
+
+# git-config
+sh ./set_git_config.sh
 
 # install zplug
 curl -sL get.zplug.sh | zsh

@@ -63,13 +63,15 @@ set hlsearch
 set showcmd
 set laststatus=2
 
+" clipboard
 set clipboard=unnamed
 
+" max syntax highlight column
 set synmaxcol=200
 
+" make new split window on below(v) or right(s)
 set splitbelow
 set splitright
-
 
 " key mapping
 nmap <silent> <Esc><Esc> :nohlsearch<CR><Esc>
@@ -94,6 +96,10 @@ nnoremap <S-Left>  <C-w><
 nnoremap <S-Right> <C-w>>
 nnoremap <S-Up>    <C-w>-
 nnoremap <S-Down>  <C-w>+
+
+" indent with single inequality
+nnoremap > >>
+nnoremap < <<
 
 " save as root
 cmap w!! w !sudo tee > /dev/null %

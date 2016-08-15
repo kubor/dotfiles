@@ -12,7 +12,6 @@
 #           --enable-pythoninterp
 #           --enable-python3interp
 #           --enable-rubyinterp
-#           --with-python-config-dir=/usr/lib64/python2.6/config
 #           --disable-gui
 #           --enable-fontset
 #
@@ -27,8 +26,10 @@ fi
 pwd
 
 if [ ! -d "${HOME}/src/vim" ]; then
+    echo "clone vim/vim repository"
     git clone https://github.com/vim/vim.git && cd vim
 else
+    echo "pull vim/vim"
     cd vim
     git pull
 fi
@@ -55,8 +56,4 @@ fi
 git clone https://github.com/Shougo/dein.vim.git \
     ~/.vim/dein/repos/github.com/Shougo/dein.vim
 
-echo "please check your PATH ordar."
-echo "recommended settings:"
-echo "   zsh; echo \"PATH=\$HOME/bin:\$PATH\" >> ~/.zshrc"
-echo "  bash; echo \"PATH=\$HOME/bin:\$PATH\" >> ~/.bashrc"
 echo "done."
