@@ -51,6 +51,7 @@ alias la="ls -a"
 alias mv="mv -i"
 alias rm="rm -i"
 alias grep="grep --color=auto -i"
+alias grep="zgrep --color=auto -i"
 alias egrep="egrep --color=auto -i"
 alias src="source ~/.zshrc"
 if type ccat > /dev/null 2>&1; then
@@ -69,6 +70,7 @@ alias co="git checkout"
 alias -g L="| less"
 alias -g G="| grep"
 alias -g W="| wc"
+
 ## サーバ個別のalias設定をインポート
 if [ -f ~/.zshrc.alias ]; then
     source ~/.zshrc.alias
