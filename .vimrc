@@ -38,7 +38,6 @@ set textwidth=0
 set colorcolumn=80
 
 " basic settings
-set number
 set list
 set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%,eol:↲
 set showmatch
