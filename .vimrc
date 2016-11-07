@@ -97,10 +97,6 @@ nnoremap <S-Right> <C-w>>
 nnoremap <S-Up>    <C-w>-
 nnoremap <S-Down>  <C-w>+
 
-" indent with single inequality
-nnoremap > >>
-nnoremap < <<
-
 " save as root
 cmap w!! w !sudo tee > /dev/null %
 
@@ -237,6 +233,7 @@ if $TERM == 'screen'
     set t_Co=256
 endif
 
+"colorscheme hybrid
 syntax enable
 
 " filetype settings

@@ -39,10 +39,18 @@ if [ -f ~/.zshrc.path ]; then
 fi
 # LANG
 export LANG=ja_JP.UTF-8
+
 ## anyenv の初期化
 if type anyenv >/dev/null 2>&1; then
     eval "$(anyenv init -)"
 fi
+
+# direnv
+if type direnv >/dev/null 2>&1; then
+    eval "$(direnv hook zsh)"
+    export EDITOR="vim"
+fi
+
 # エイリアス設定
 alias vi="vim -u NONE --noplugin"
 alias awk="gawk"
