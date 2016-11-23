@@ -2,6 +2,8 @@
 Configuration example for ``ptpython``.
 
 Copy this file to ~/.ptpython/config.py
+
+mod by kubor
 """
 from __future__ import unicode_literals
 from prompt_toolkit.filters import ViInsertMode
@@ -68,10 +70,10 @@ def configure(repl):
     repl.paste_mode = False
 
     # Use the classic prompt. (Display '>>>' instead of 'In [1]'.)
-    repl.prompt_style = 'classic'  # 'classic' or 'ipython'
+    repl.prompt_style = 'ipython'  # 'classic' or 'ipython'
 
     # Don't insert a blank line after the output.
-    repl.insert_blank_line_after_output = False
+    repl.insert_blank_line_after_output = True
 
     # History Search.
     # When True, going back in history will filter the history on the records
@@ -101,11 +103,11 @@ def configure(repl):
     repl.enable_input_validation = True
 
     # Use this colorscheme for the code.
-    repl.use_code_colorscheme('pastie')
+    repl.use_code_colorscheme('monokai')
 
     # Enable 24bit True color. (Not all terminals support this. -- maybe check
     # $TERM before changing.)
-    repl.true_color = False
+    repl.true_color = True
 
     # Install custom colorscheme named 'my-colorscheme' and use it.
     """
