@@ -8,7 +8,7 @@ ln -sf ~/dotfiles/.tmux.conf ~/.tmux.conf
 ln -sf ~/dotfiles/.peco.snippet.bioinfo ~/.peco.snippet.bioinfo
 
 rc_dir="$HOME/.vim/rc"
-if [ -n $rc_dir ]; then
+if [ ! -e $rc_dir ]; then
     mkdir -p "${rc_dir}"
 fi
 

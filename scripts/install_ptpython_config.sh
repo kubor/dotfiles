@@ -1,7 +1,7 @@
 #!/bin/bash
 
-if [ -n ~/.ptpython ]; then
+if [ ! -e ~/.ptpython ]; then
     mkdir -p ~/.ptpython
 fi
 
-cp -f ../.ptpython/config.py ~/.ptpython/
+cp -f ~/dotfiles/.ptpython/config.py ~/.ptpython/
