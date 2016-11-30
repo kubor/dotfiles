@@ -251,8 +251,11 @@ repo = 'vim-perl/vim-perl'
 on_ft = 'perl'
 
 [[plugins]]
-repo = 'rcmdnk/vim-markdown'
+repo = 'plasticboy/vim-markdown'
 on_ft = ['markdown', 'mkd']
+hook_add = '''
+let g:vim_markdown_folding_disabled = 1
+'''
 
 [[plugins]]
 repo = 'Konfekt/FastFold'
