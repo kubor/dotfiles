@@ -75,8 +75,12 @@ fi
 ## git 関係
 alias gst="git status -sb"
 alias gg="git status -sb"
+alias gm="git commit -m"
 alias gb="git branch -a"
 alias co="git checkout"
+
+## make
+alias j4="echo-sd \"デマアアアァアァァシアアアアァァァアアア\!\!\!\!\"; make -j 4"
 
 ## グローバルエイリアス
 alias -g L="| less"
