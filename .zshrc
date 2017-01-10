@@ -7,6 +7,9 @@
 #                ||----w |
 #                ||     ||
 
+# for debug
+#zmodload zsh/zprof && zprof
+
 # zplug init
 if [[ ! -d ~/.zplug ]]; then
     git clone https://github.com/zplug/zplug ~/.zplug
@@ -71,6 +74,7 @@ fi
 
 ## git 関係
 alias gst="git status -sb"
+alias gg="git status -sb"
 alias gb="git branch -a"
 alias co="git checkout"
 
@@ -187,9 +191,6 @@ ls_abbrev() {
     fi
 }
 # 補完
-## 補完機能を有効にする
-autoload -Uz compinit
-compinit -C
 ## 補完候補を一覧表示
 setopt auto_list
 ## TAB で順に補完候補を切り替える
@@ -256,13 +257,13 @@ fi
 
 # zplug plugins
 
-zplug "zplug/zplug"
 zplug "mafredri/zsh-async", on:sindresorhus/pure
 zplug "sindresorhus/pure", use:pure.zsh
 zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-syntax-highlighting"
 zplug "supercrabtree/k"
 zplug "mollifier/cd-gitroot"
+zplug "zplug/zplug"
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then

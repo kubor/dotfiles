@@ -96,6 +96,16 @@ nnoremap <S-Right> <C-w>>
 nnoremap <S-Up>    <C-w>-
 nnoremap <S-Down>  <C-w>+
 
+" show smile when use cursol key
+noremap  <Left>  :<C-u>smile<CR>
+noremap  <Right> :<C-u>smile<CR>
+noremap  <Up>    :<C-u>smile<CR>
+noremap  <Down>  :<C-u>smile<CR>
+inoremap <Left>  <Esc>:smile<CR>
+inoremap <Right> <Esc>:smile<CR>
+inoremap <Up>    <Esc>:smile<CR>
+inoremap <Down>  <Esc>:smile<CR>
+
 " save as root
 cmap w!! w !sudo tee > /dev/null %
 
