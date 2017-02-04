@@ -48,6 +48,11 @@ if type anyenv >/dev/null 2>&1; then
     eval "$(anyenv init -)"
 fi
 
+## init pyenv virtualenv
+if type pyenv >/dev/null 2>&1; then
+    eval "$(pyenv virtualenv-init -)"
+fi
+
 # direnv
 if type direnv >/dev/null 2>&1; then
     eval "$(direnv hook zsh)"
@@ -121,79 +126,6 @@ setopt hist_ignore_space
 # プロンプトの設定
 # プロンプトが表示されるたびにプロンプト文字列を評価、置換する
 setopt PROMPT_SUBST
-# gitのステータスをプロンプトに表示する
-## imported from http://int128.hatenablog.com/entry/2015/07/15/003851
-#autoload -Uz add-zsh-hook
-#
-#function _vcs_git_indicator() {
-#  typeset -A git_info
-#  local git_indicator git_status
-#  git_status=("${(f)$(git status --porcelain --branch 2> /dev/null)}")
-#  (( $? == 0 )) && {
-#    git_info[branch]="${${git_status[1]}#\#\# }"
-#    shift git_status
-#    git_info[changed]=${#git_status:#\?\?*}
-#    git_info[untracked]=$(($#git_status - ${git_info[changed]}))
-#    git_info[clean]=$(($#git_status == 0))
-#
-#    git_indicator=("%{%F{blue}%}${git_info[branch]}%{%f%}")
-#    ((${git_info[clean]})) && git_indicator+=("%{%F{}%}clean%{%f%}")
-#    ((${git_info[changed]})) && git_indicator+=("%{%F{yellow}%}${git_info[changed]} changed%{%f%}")
-#    ((${git_info[untracked]})) && git_indicator+=("%{%F{red}%}${git_info[untracked]} untracked%{%f%}")
-#  }
-#  _vcs_git_indicator="${git_indicator}"
-#}
-#
-#add-zsh-hook precmd _vcs_git_indicator
-#
-#function {
-#  local dir='%{%F{blue}%B%}%~%{%b%f%}'
-#  local rc="%(?, , %{%F{red}%}%?%{%f%})"
-#  local user='%{%F{green}%}[%n@%{%f%}'
-#  local host='%{%F{green}%}%m]%{%f%}'
-#  [ "$SSH_CLIENT" ] && local via="${${=SSH_CLIENT}[1]} %{%B%}>>>%{%b%} "
-#  local git='$_vcs_git_indicator'
-#  local mark=$'%{%F{blue}%B%}$ %{%f%}'
-#  local linebreak=$'\n'
-#  PROMPT="$user$via$host $mark"
-#  RPROMPT="$dir $rc $git"
-#}
-## cdした後に自動的にlsする # import yonchu / chpwd_for_zsh.sh
-function chpwd() {
-    ls_abbrev
-}
-ls_abbrev() {
-    # -a : Do not ignore entries starting with ..
-    # -C : Force multi-column output.
-    # -F : Append indicator (one of */=>@|) to entries.
-    local cmd_ls='ls'
-    local -a opt_ls
-    opt_ls=('-aCF' '--color=always')
-    case "${OSTYPE}" in
-        freebsd*|darwin*)
-            if type gls > /dev/null 2>&1; then
-                cmd_ls='gls'
-            else
-                # -G : Enable colorized output.
-                opt_ls=('-aCFG')
-            fi
-            ;;
-    esac
-
-    local ls_result
-    ls_result=$(CLICOLOR_FORCE=1 COLUMNS=$COLUMNS command $cmd_ls ${opt_ls[@]} | sed $'/^\e\[[0-9;]*m$/d')
-
-    local ls_lines=$(echo "$ls_result" | wc -l | tr -d ' ')
-
-    if [ $ls_lines -gt 10 ]; then
-        echo "$ls_result" | head -n 5
-        echo '...'
-        echo "$ls_result" | tail -n 5
-        echo "$(command ls -1 -A | wc -l | tr -d ' ') files exist"
-    else
-        echo "$ls_result"
-    fi
-}
 # 補完
 ## 補完候補を一覧表示
 setopt auto_list
@@ -261,13 +193,21 @@ fi
 
 # zplug plugins
 
-zplug "mafredri/zsh-async", on:sindresorhus/pure
-zplug "sindresorhus/pure", use:pure.zsh
-zplug "zsh-users/zsh-completions"
-zplug "zsh-users/zsh-syntax-highlighting"
-zplug "supercrabtree/k"
-zplug "mollifier/cd-gitroot"
-zplug "zplug/zplug"
+zplug 'mafredri/zsh-async', on:sindresorhus/pure
+zplug 'sindresorhus/pure', use:pure.zsh, as:theme
+zplug 'chrissicool/zsh-256color'
+zplug "b4b4r07/enhancd", use:init.sh
+zplug "mrowa44/emojify", as:command
+zplug "peco/peco", as:command, from:gh-r
+zplug 'zsh-users/zsh-completions'
+zplug 'zsh-users/zsh-syntax-highlighting', defer:2
+zplug 'supercrabtree/k'
+zplug 'mollifier/cd-gitroot'
+zplug 'yonchu/3935922', \
+    from:gist, \
+    as:plugin, \
+    use:'chpwd_for_zsh.sh'
+zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
