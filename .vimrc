@@ -43,8 +43,8 @@ set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%,eol:↲
 set showmatch
 set matchtime=1
 set matchpairs& matchpairs+=<:>
-set cursorline
-hi clear CursorLine
+"set cursorline
+"hi clear CursorLine
 set virtualedit=all
 set backspace=start,eol,indent
 set hidden
@@ -139,7 +139,6 @@ let g:python3_host_prog = 'python3'
 " plugin install directory
 let s:cache_home = empty($XDG_CACHE_HOME) ? expand('~/.cache') : $XDG_CACHE_HOME
 let s:dein_dir = s:cache_home . '/dein'
-
 let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 
 " download dein.vim if it not installed
@@ -153,11 +152,13 @@ endif
 " load TOML file listed plugins
 let g:rc_dir = expand('~/.vim/rc')
 let s:toml = g:rc_dir . '/dein.toml'
+let s:toml_lazy = g:rc_dir . '/dein_lazy.toml'
 
 "" start dein settings
 if dein#load_state(s:dein_dir)
-    call dein#begin(s:dein_dir, [$MYVIMRC, s:toml])
-    call dein#load_toml(s:toml)
+    call dein#begin(s:dein_dir)
+    call dein#load_toml(s:toml, {'lazy': 0})
+    call dein#load_toml(s:toml_lazy, {'lazy': 1})
     call dein#end()
     call dein#save_state()
 endif
