@@ -26,6 +26,9 @@ PATH=$HOME/.local/bin:$PATH
 export PATH="/usr/local/heroku/bin:$PATH"
 export PATH="/usr/local/bin:$PATH"
 
+# go
+export GOPATH=$HOME/.go
+
 # anyenv path
 export PATH="$HOME/.anyenv/bin:$PATH"
 
@@ -51,12 +54,6 @@ fi
 ## init pyenv virtualenv
 if type pyenv >/dev/null 2>&1; then
     eval "$(pyenv virtualenv-init -)"
-fi
-
-# direnv
-if type direnv >/dev/null 2>&1; then
-    eval "$(direnv hook zsh)"
-    export EDITOR="vim"
 fi
 
 # エイリアス設定
@@ -196,13 +193,9 @@ fi
 zplug 'mafredri/zsh-async', on:sindresorhus/pure
 zplug 'sindresorhus/pure', use:pure.zsh, as:theme
 zplug 'chrissicool/zsh-256color'
-zplug "b4b4r07/enhancd", use:init.sh
 zplug "mrowa44/emojify", as:command
-zplug "peco/peco", as:command, from:gh-r
 zplug 'zsh-users/zsh-completions'
 zplug 'zsh-users/zsh-syntax-highlighting', defer:2
-zplug 'supercrabtree/k'
-zplug 'mollifier/cd-gitroot'
 zplug 'yonchu/3935922', \
     from:gist, \
     as:plugin, \
