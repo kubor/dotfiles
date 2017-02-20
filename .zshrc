@@ -17,10 +17,15 @@ if [[ ! -d ~/.zplug ]]; then
 fi
 source ~/.zplug/init.zsh
 
+# LANG
+export LANG=ja_JP.UTF-8
+# Use vim
+export EDITOR="vim"
+
 # PATH
-PATH=/home/$USER/bin:$PATH
+export PATH=/home/$USER/bin:$PATH
 # localのpipディレクトリにPATHを通す
-PATH=$HOME/.local/bin:$PATH
+export PATH=$HOME/.local/bin:$PATH
 
 # Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
@@ -34,8 +39,7 @@ export PATH="$HOME/.anyenv/bin:$PATH"
 
 # set paths for terminal multiprexa(tmux)
 # cf. http://monmon.hateblo.jp/entry/2013/12/13/233242
-for dir in `ls $HOME/.anyenv/envs`
-do
+for dir in $HOME/.anyenv/envs/* ; do
     export PATH="$HOME/.anyenv/envs/$dir/shims:$PATH"
 done
 
@@ -43,8 +47,6 @@ done
 if [ -f ~/.zshrc.path ]; then
     source ~/.zshrc.path
 fi
-# LANG
-export LANG=ja_JP.UTF-8
 
 ## anyenv の初期化
 if type anyenv >/dev/null 2>&1; then
@@ -52,10 +54,14 @@ if type anyenv >/dev/null 2>&1; then
 fi
 
 ## init pyenv virtualenv
-if type pyenv >/dev/null 2>&1; then
-    eval "$(pyenv virtualenv-init -)"
-fi
+#if type pyenv >/dev/null 2>&1; then
+#    eval "$(pyenv virtualenv-init -)"
+#fi
 
+# direnv
+#if type direnv >/dev/null 2>&1; then
+#    eval "$(direnv hook zsh)"
+#fi
 # エイリアス設定
 alias vi="vim -u NONE --noplugin"
 alias awk="gawk"
@@ -156,6 +162,7 @@ setopt auto_pushd
 setopt pushd_ignore_dups
 ## 3秒以上の処理は自動的に処理時間を表示
 REPORTTIME=3
+
 # pecoで履歴を検索する
 function peco-history-selection() {
     cmd='tac'
@@ -169,6 +176,7 @@ function peco-history-selection() {
     zle reset-prompt
 }
 zle -N peco-history-selection
+
 # pecoでスニペットを読み込む
 function peco-snippets-loader() {
     if ls ~/.peco.snippet* >/dev/null 2>&1; then
@@ -215,5 +223,5 @@ zplug load --verbose
 
 # for debug
 #if (which zprof > /dev/null) ;then
-#      zprof | less
+#    zprof | less
 #fi

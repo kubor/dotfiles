@@ -14,6 +14,9 @@ repo = 'tpope/vim-surround'
 repo = 'Yggdroot/indentLine'
 
 [[plugins]]
+repo = 'Shougo/neosnippet-snippets'
+
+[[plugins]]
 repo = 'w0ng/vim-hybrid'
 hook_add = '''
 set background=dark
@@ -62,13 +65,8 @@ let g:lightline = {
 '''
 
 [[plugins]]
-repo = 'thinca/vim-template'
-
-[[plugins]]
-repo = 'thinca/vim-quickrun'
-
-[[plugins]]
 repo = 'Shougo/neosnippet'
+depends = 'neosnippet-snippets'
 hook_add = '''
 " snipets settings
 imap <C-k>      <Plug>(neosnippet_expand_or_jump)
@@ -86,29 +84,41 @@ if has("conceal")
 '''
 
 [[plugins]]
-repo = 'Shougo/neosnippet-snippets'
+repo = 'kchmck/vim-coffee-script'
+on_ft = 'coffee'
+on_i = 1
+
+[[plugins]]
+repo = 'vim-perl/vim-perl'
+on_ft = 'perl'
+
+[[plugins]]
+repo = 'plasticboy/vim-markdown'
+on_ft = ['markdown', 'mkd']
+hook_add = '''
+let g:vim_markdown_folding_disabled = 1
+'''
+
+[[plugins]]
+repo = 'tpope/vim-fugitive'
+
+[[plugins]]
+repo = 'thinca/vim-template'
+
+[[plugins]]
+repo = 'thinca/vim-quickrun'
 
 [[plugins]]
 repo = 'Shougo/context_filetype.vim'
 
 [[plugins]]
 repo = 'osyo-manga/vim-precious'
-
-[[plugins]]
-repo = 'hotchpotch/perldoc-vim'
-
-[[plugins]]
-repo = 'scrooloose/syntastic'
-hook_post_source = '''
-" use flake8 for python lint checker
-let g:syntastic_python_checkers = ['flake8']
+hook_add = '''
+let g:context_filetype#search_offset = 180
 '''
 
 [[plugins]]
 repo = 'haya14busa/incsearch.vim'
-
-[[plugins]]
-repo = 'tpope/vim-fugitive'
 
 [[plugins]]
 repo = 'Shougo/vimproc.vim'
@@ -126,15 +136,12 @@ endif
 '''
 
 [[plugins]]
-repo = 'Shougo/vimshell'
-
-[[plugins]]
 repo = 'Shougo/deoplete.nvim'
 if = 'has("nvim")'
 on_i = 1
 
 [[plugins]]
-repo = 'Shougo/neocomplete.vim'
+repo = 'Shougo/neocomplete'
 if = 'has("lua")'
 on_i = 1
 hook_add = '''
@@ -193,69 +200,7 @@ let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 '''
 
 [[plugins]]
-repo = 'lambdalisue/vim-django-support'
-on_ft = ['python', 'python3', 'djangohtml']
-on_i = 1
-
-[[plugins]]
-repo = 'hynek/vim-python-pep8-indent'
-on_ft = ['python', 'python3', 'djangohtml']
-on_i = 1
-
-[[plugins]]
-repo = 'jmcantrell/vim-virtualenv'
-on_i = 1
-
-[[plugins]]
-repo = 'davidhalter/jedi-vim'
-on_ft = ['python', 'python3', 'djangohtml']
-on_i = 1
-hook_post_source = '''
-autocmd vimrc FileType python setlocal omnifunc=jedi#completions
-let g:jedi#completions_enabled = 0
-let g:jedi#auto_vim_configuration = 0
-let g:jedi#popup_select_first = 0
-let g:jedi#rename_command = '<Leader>R'
-if !exists('g:neocomplete#force_omni_input_patterns')
-    let g:neocomplete#force_omni_input_patterns = {}
-endif
-let g:neocomplete#force_omni_input_patterns.python =
-    \ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
-'''
-
-[[plugins]]
-repo = 'lambdalisue/vim-pyenv'
-on_ft = ['python', 'python3', 'djangohtml']
-depends = 'jedi-vim'
-hook_post_source = '''
-if jedi#init_python()
-    function! s:jedi_auto_force_py_version() abort
-        let major_version = pyenv#python#get_internal_major_version()
-        call jedi#force_py_version(major_version)
-    endfunction
-    augroup vim-pyenv-custom-augroup
-        autocmd! *
-        autocmd User vim-pyenv-activate-post   call s:jedi_auto_force_py_version()
-        autocmd User vim-pyenv-deactivate-post call s:jedi_auto_force_py_version()
-    augroup END
-endif
-'''
-
-[[plugins]]
-repo = 'kchmck/vim-coffee-script'
-on_ft = 'coffee'
-on_i = 1
-
-[[plugins]]
-repo = 'vim-perl/vim-perl'
-on_ft = 'perl'
-
-[[plugins]]
-repo = 'plasticboy/vim-markdown'
-on_ft = ['markdown', 'mkd']
-hook_add = '''
-let g:vim_markdown_folding_disabled = 1
-'''
+repo = 'Shougo/vimshell'
 
 [[plugins]]
 repo = 'Konfekt/FastFold'

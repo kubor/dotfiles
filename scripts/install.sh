@@ -13,6 +13,7 @@ if [ ! -e $rc_dir ]; then
 fi
 
 ln -sf ~/dotfiles/rc/dein.toml ~/.vim/rc/dein.toml
+ln -sf ~/dotfiles/rc/dein_lazy.toml ~/.vim/rc/dein_lazy.toml
 
 # for neovim config
 if [ ! -e "${HOME}/.config/nvim" ]; then
@@ -30,4 +31,4 @@ sh ${CWD}/set_git_config.sh
 sh ${CWD}/install_ptpython_config.sh
 
 # install zplug
-curl -sL get.zplug.sh | zsh
+curl -sL zplug.sh/installer | zsh

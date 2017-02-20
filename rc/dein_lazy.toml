@@ -1,0 +1,61 @@
+[[plugins]]
+repo = 'scrooloose/syntastic'
+hook_post_source = '''
+" use flake8 for python lint checker
+let g:syntastic_python_checkers = ['flake8']
+'''
+
+[[plugins]]
+repo = 'hotchpotch/perldoc-vim'
+on_ft = ['perl']
+
+[[plugins]]
+repo = 'lambdalisue/vim-django-support'
+on_ft = ['python', 'python3', 'djangohtml']
+
+[[plugins]]
+repo = 'hynek/vim-python-pep8-indent'
+on_ft = ['python', 'python3', 'djangohtml']
+on_i = 1
+
+[[plugins]]
+repo = 'jmcantrell/vim-virtualenv'
+on_i = 1
+
+[[plugins]]
+repo = 'davidhalter/jedi-vim'
+depends = 'neocomplete'
+on_ft = ['python', 'python3', 'djangohtml']
+on_i = 1
+hook_post_source = '''
+autocmd vimrc FileType python setlocal omnifunc=jedi#completions
+let g:jedi#completions_enabled = 0
+let g:jedi#auto_vim_configuration = 0
+let g:jedi#popup_select_first = 0
+let g:jedi#rename_command = '<Leader>R'
+if !exists('g:neocomplete#force_omni_input_patterns')
+    let g:neocomplete#force_omni_input_patterns = {}
+endif
+let g:neocomplete#force_omni_input_patterns.python =
+    \ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
+'''
+
+[[plugins]]
+repo = 'lambdalisue/vim-pyenv'
+on_ft = ['python', 'python3', 'djangohtml']
+on_i = 1
+depends = 'jedi-vim'
+hook_post_source = '''
+if jedi#init_python()
+    function! s:jedi_auto_force_py_version() abort
+        let major_version = pyenv#python#get_internal_major_version()
+        call jedi#force_py_version(major_version)
+    endfunction
+    augroup vim-pyenv-custom-augroup
+        autocmd! *
+        autocmd User vim-pyenv-activate-post   call s:jedi_auto_force_py_version()
+        autocmd User vim-pyenv-deactivate-post call s:jedi_auto_force_py_version()
+    augroup END
+endif
+'''
+
