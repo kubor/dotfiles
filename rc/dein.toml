@@ -33,7 +33,6 @@ let g:lightline = {
     \ 'active': {
     \   'left': [
     \       ['mode', 'paste'],
-    \       ['pyenv'],
     \       ['fugitive', 'filename']
     \   ],
     \   'right': [
@@ -57,7 +56,6 @@ let g:lightline = {
     \   'filetype': 'MyFiletype',
     \   'fileencoding': 'MyFileencoding',
     \   'mode': 'MyMode',
-    \   'pyenv': 'pyenv#statusline#component',
     \ },
     \ 'separator': {'left': '', 'right': ''},
     \ 'subseparator': {'left': '|', 'right': '|'}
@@ -197,6 +195,13 @@ endif
 " For perlomni.vim setting.
 " https://github.com/c9s/perlomni.vim
 let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+'''
+
+[[plugins]]
+repo = 'scrooloose/syntastic'
+hook_add = '''
+" use flake8 for python lint checker
+let g:syntastic_python_checkers = ['flake8']
 '''
 
 [[plugins]]

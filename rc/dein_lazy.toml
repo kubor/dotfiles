@@ -1,11 +1,4 @@
 [[plugins]]
-repo = 'scrooloose/syntastic'
-hook_post_source = '''
-" use flake8 for python lint checker
-let g:syntastic_python_checkers = ['flake8']
-'''
-
-[[plugins]]
 repo = 'hotchpotch/perldoc-vim'
 on_ft = ['perl']
 
@@ -16,7 +9,6 @@ on_ft = ['python', 'python3', 'djangohtml']
 [[plugins]]
 repo = 'hynek/vim-python-pep8-indent'
 on_ft = ['python', 'python3', 'djangohtml']
-on_i = 1
 
 [[plugins]]
 repo = 'jmcantrell/vim-virtualenv'
@@ -26,7 +18,6 @@ on_i = 1
 repo = 'davidhalter/jedi-vim'
 depends = 'neocomplete'
 on_ft = ['python', 'python3', 'djangohtml']
-on_i = 1
 hook_post_source = '''
 autocmd vimrc FileType python setlocal omnifunc=jedi#completions
 let g:jedi#completions_enabled = 0
@@ -43,7 +34,6 @@ let g:neocomplete#force_omni_input_patterns.python =
 [[plugins]]
 repo = 'lambdalisue/vim-pyenv'
 on_ft = ['python', 'python3', 'djangohtml']
-on_i = 1
 depends = 'jedi-vim'
 hook_post_source = '''
 if jedi#init_python()

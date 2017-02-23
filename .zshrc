@@ -27,6 +27,9 @@ export PATH=/home/$USER/bin:$PATH
 # localのpipディレクトリにPATHを通す
 export PATH=$HOME/.local/bin:$PATH
 
+# Add zplug bin
+export PATH=$HOME/.zplug/bin:$PATH
+
 # Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 export PATH="/usr/local/bin:$PATH"
@@ -202,6 +205,7 @@ zplug 'mafredri/zsh-async', on:sindresorhus/pure
 zplug 'sindresorhus/pure', use:pure.zsh, as:theme
 zplug 'chrissicool/zsh-256color'
 zplug "mrowa44/emojify", as:command
+zplug 'b4b4r07/emoji-cli'
 zplug 'zsh-users/zsh-completions'
 zplug 'zsh-users/zsh-syntax-highlighting', defer:2
 zplug 'yonchu/3935922', \
