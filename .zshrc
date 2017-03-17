@@ -37,29 +37,10 @@ export PATH="/usr/local/bin:$PATH"
 # go
 export GOPATH=$HOME/.go
 
-# anyenv path
-export PATH="$HOME/.anyenv/bin:$PATH"
-
-# set paths for terminal multiprexa(tmux)
-# cf. http://monmon.hateblo.jp/entry/2013/12/13/233242
-for dir in $HOME/.anyenv/envs/* ; do
-    export PATH="$HOME/.anyenv/envs/$dir/shims:$PATH"
-done
-
 ## サーバ個別のPATH設定をインポート
 if [ -f ~/.zshrc.path ]; then
     source ~/.zshrc.path
 fi
-
-## anyenv の初期化
-if type anyenv >/dev/null 2>&1; then
-    eval "$(anyenv init -)"
-fi
-
-## init pyenv virtualenv
-#if type pyenv >/dev/null 2>&1; then
-#    eval "$(pyenv virtualenv-init -)"
-#fi
 
 # direnv
 #if type direnv >/dev/null 2>&1; then
