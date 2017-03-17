@@ -43,9 +43,10 @@ if [ -f ~/.zshrc.path ]; then
 fi
 
 # direnv
-#if type direnv >/dev/null 2>&1; then
-#    eval "$(direnv hook zsh)"
-#fi
+if type direnv >/dev/null 2>&1; then
+    eval "$(direnv hook zsh)"
+fi
+
 # エイリアス設定
 alias vi="vim -u NONE --noplugin"
 alias awk="gawk"
