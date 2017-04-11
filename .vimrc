@@ -109,10 +109,6 @@ inoremap <Down>  <Esc>:smile<CR>
 " save as root
 cmap w!! w !sudo tee > /dev/null %
 
-" move to pair tag
-nnoremap <Tab> %
-vnoremap <Tab> %
-
 " launch VimFiler
 nnoremap <Space>f :VimFiler -split -simple -winwidth=30 -no-quit<Enter>
 
