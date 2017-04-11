@@ -43,8 +43,8 @@ set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%,eol:↲
 set showmatch
 set matchtime=1
 set matchpairs& matchpairs+=<:>
-"set cursorline
-"hi clear CursorLine
+set cursorline
+hi clear CursorLine
 set virtualedit=all
 set backspace=start,eol,indent
 set hidden
