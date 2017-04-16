@@ -1,0 +1,66 @@
+" __________
+"< ideavimrc >
+" ----------
+"        \   ^__^
+"         \  (oo)\_______
+"            (__)\       )\/\
+"                ||----w |
+"                ||     ||
+"
+" cute vim
+set encoding=utf-8
+scriptencoding utf-8
+
+" indent
+set smartindent
+set autoindent
+set smarttab
+set shiftround
+
+" textwrap
+set wrap
+set linebreak
+set textwidth=0
+set colorcolumn=80
+
+" basic settings
+set showmatch
+set matchtime=1
+set matchpairs& matchpairs+=<:>
+"set cursorline
+"hi clear CursorLine
+set virtualedit=all
+set backspace=start,eol,indent
+set hidden
+
+" search settings
+set ignorecase
+set smartcase
+set incsearch
+set hlsearch
+
+" status line
+set showcmd
+set laststatus=2
+
+" clipboard
+set clipboard=unnamed
+
+" max syntax highlight column
+set synmaxcol=200
+
+" make new split window on below(v) or right(s)
+set splitbelow
+set splitright
+
+" key mapping
+nmap <silent> <Esc><Esc> :nohlsearch<CR><Esc>
+inoremap jj <Esc>
+
+" zz with search result
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap * *zz
+nnoremap # #zz
+nnoremap g* g*zz
+nnoremap g# g#zz
