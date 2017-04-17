@@ -3,6 +3,7 @@ CWD=`dirname $0`
 
 echo "make symbolic links to $HOME"
 ln -sf ~/dotfiles/.vimrc ~/.vimrc
+ln -sf ~/dotfiles/.ideavimrc ~/.ideavimrc
 ln -sf ~/dotfiles/.zshrc ~/.zshrc
 ln -sf ~/dotfiles/.tmux.conf ~/.tmux.conf
 ln -sf ~/dotfiles/.peco.snippet.bioinfo ~/.peco.snippet.bioinfo
