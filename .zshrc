@@ -23,7 +23,6 @@ export LANG=ja_JP.UTF-8
 export EDITOR="vim"
 
 # PATH
-export PATH=/home/$USER/bin:$PATH
 # localのpipディレクトリにPATHを通す
 export PATH=$HOME/.local/bin:$PATH
 
@@ -32,7 +31,8 @@ export PATH=$HOME/.zplug/bin:$PATH
 
 # Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
-export PATH="/usr/local/bin:$PATH"
+
+export PATH=$HOME/bin:$PATH
 
 # go
 export GOPATH=$HOME/.go
@@ -55,7 +55,7 @@ alias la="ls -a"
 alias mv="mv -i"
 alias rm="rm -i"
 alias grep="grep --color=auto -i"
-alias grep="zgrep --color=auto -i"
+alias zgrep="zgrep --color=auto -i"
 alias egrep="egrep --color=auto -i"
 alias src="source ~/.zshrc"
 if type ccat > /dev/null 2>&1; then
