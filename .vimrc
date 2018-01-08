@@ -160,9 +160,9 @@ if dein#load_state(s:dein_dir)
 endif
 
 "" auto install plugins not installed
-if dein#check_install(['vimproc'])
-    call dein#install(['vimproc'])
-endif
+"if dein#check_install(['vimproc'])
+"    call dein#install(['vimproc'])
+"endif
 
 if has('vim_starting') && dein#check_install()
     call dein#install()
