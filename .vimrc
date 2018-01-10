@@ -132,6 +132,9 @@ endfunction
 let g:python3_host_prog = 'python3'
 
 " dein settings -----------------------------------------------------------
+if &compatible
+    set nocompatible
+endif
 " plugin install directory
 let s:cache_home = empty($XDG_CACHE_HOME) ? expand('~/.cache') : $XDG_CACHE_HOME
 let s:dein_dir = s:cache_home . '/dein'
@@ -157,11 +160,6 @@ if dein#load_state(s:dein_dir)
     call dein#load_toml(s:toml_lazy, {'lazy': 1})
     call dein#end()
     call dein#save_state()
-endif
-
-"" auto install plugins not installed
-if dein#check_install(['vimproc'])
-    call dein#install(['vimproc'])
 endif
 
 if has('vim_starting') && dein#check_install()
@@ -243,8 +241,8 @@ endif
 syntax enable
 
 " filetype settings
-au BufRead,BufNewFile {*.coffee} set filetype=coffee
+autocmd BufRead,BufNewFile {*.coffee} set filetype=coffee
 autocmd filetype coffee,javascript setlocal shiftwidth=2 softtabstop=2 tabstop=2 expandtab
 
 " open with last cursor position
-au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\""
+autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\""
