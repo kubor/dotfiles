@@ -149,6 +149,7 @@ setopt auto_pushd
 setopt pushd_ignore_dups
 ## 3秒以上の処理は自動的に処理時間を表示
 REPORTTIME=3
+PURE_PROMPT_SYMBOL="🐰 "
 
 # pecoで履歴を検索する
 function peco-history-selection() {

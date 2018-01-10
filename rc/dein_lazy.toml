@@ -16,7 +16,7 @@ on_i = 1
 
 [[plugins]]
 repo = 'davidhalter/jedi-vim'
-depends = 'neocomplete'
+depends = 'deoplete.nvim'
 on_ft = ['python', 'python3', 'djangohtml']
 hook_post_source = '''
 autocmd vimrc FileType python setlocal omnifunc=jedi#completions
@@ -30,6 +30,10 @@ endif
 let g:neocomplete#force_omni_input_patterns.python =
     \ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
 '''
+
+[[plugin]]
+repo = 'zchee/deoplete-jedi'
+on_ft = ['python', 'python3', 'djangohtml']
 
 [[plugins]]
 repo = 'cjrh/vim-conda'

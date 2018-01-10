@@ -16,7 +16,7 @@
 #           --enable-fontset
 #
 
-echo "Install VIM from github online repository vim/vim."
+echo "Install neovim from github repository nvim/nvim."
 if [ -d "$HOME/src" ]; then
     cd "$HOME/src"
 else
@@ -25,12 +25,12 @@ else
 fi
 pwd
 
-if [ ! -d "${HOME}/src/vim" ]; then
-    echo "clone vim/vim repository"
-    git clone https://github.com/vim/vim.git && cd vim
+if [ ! -d "${HOME}/src/nvim" ]; then
+    echo "clone nvim/nvim repository"
+    git clone https://github.com/nvim/nvim.git && cd nvim
 else
-    echo "pull vim/vim"
-    cd vim
+    echo "pull nvim/nvim"
+    cd nvim
     git pull
 fi
 
@@ -40,6 +40,7 @@ fi
     --with-features=huge \
     --enable-luainterp \
     --enable-perlinterp \
+    --enable-pythoninterp=dynamic \
     --enable-python3interp=dynamic \
     --enable-rubyinterp \
     --disable-gui \
@@ -52,7 +53,7 @@ if [ -n "$HOME/.vim/dein" ]; then
     mkdir -p ~/.vim/dein/repos/github.com/Shougo/dein.vim
 fi
 
-git clone https://github.com/Shougo/dein.vim \
+git clone https://github.com/Shougo/dein.vim.git \
     ~/.vim/dein/repos/github.com/Shougo/dein.vim
 
 echo "done."
