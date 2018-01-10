@@ -36,6 +36,8 @@ export PATH=$HOME/bin:$PATH
 
 # go
 export GOPATH=$HOME/.go
+export PATH=$PATH:$GOPATH/bin
+export PATH=$PATH:/usr/local/opt/go/libexec/bin
 
 ## サーバ個別のPATH設定をインポート
 if [ -f ~/.zshrc.path ]; then
@@ -180,6 +182,15 @@ if type peco >/dev/null 2>&1; then
     bindkey '^r' peco-history-selection
     bindkey '^x' peco-snippets-loader
 fi
+
+function command_not_found_handler(){
+  if [ -e $HOME/bin/imgcat ];then
+    if [ -e ~/src/commandmiss/iori.jpg ];then
+      imgcat ~/src/commandmiss/iori.jpg
+    fi
+  fi
+  echo "ハァ…？$1とか何言ってんの？\nコマンドもろくに覚えられないなんて、アンタどうしようもないクズね。"
+}
 
 # zplug plugins
 
