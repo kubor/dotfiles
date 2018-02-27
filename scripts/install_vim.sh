@@ -41,6 +41,7 @@ fi
     --enable-luainterp \
     --enable-perlinterp \
     --enable-python3interp=dynamic \
+    --enable-pythoninterp=dynamic \
     --enable-rubyinterp \
     --disable-gui \
     --enable-fontset \
