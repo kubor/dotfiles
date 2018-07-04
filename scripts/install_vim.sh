@@ -40,8 +40,8 @@ fi
     --with-features=huge \
     --enable-luainterp \
     --enable-perlinterp \
-    --enable-python3interp=dynamic \
-    --enable-pythoninterp=dynamic \
+    --enable-python3interp \
+    --enable-pythoninterp \
     --enable-rubyinterp \
     --disable-gui \
     --enable-fontset \
