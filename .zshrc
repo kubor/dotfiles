@@ -17,6 +17,9 @@ if [[ ! -d ~/.zplug ]]; then
 fi
 source ~/.zplug/init.zsh
 
+# bindkey
+bindkey -e
+
 # LANG
 export LANG=ja_JP.UTF-8
 # Use vim
@@ -263,8 +266,6 @@ if ! zplug check --verbose; then
     fi
 fi
 
-# bindkey
-bindkey -e
 
 # Then, source plugins and add commands to $PATH
 zplug load --verbose
