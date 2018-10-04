@@ -38,6 +38,9 @@ export PATH=$HOME/.zplug/bin:$PATH
 # Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 
+# for PyCharm shell integration
+export PATH="$PATH:/usr/local/bin"
+
 export PATH=$HOME/bin:$PATH
 
 # go

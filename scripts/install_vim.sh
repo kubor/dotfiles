@@ -34,6 +34,8 @@ else
     git pull
 fi
 
+make clean
+
 ./configure \
     --prefix=$HOME \
     --enable-multibyte \
@@ -41,7 +43,6 @@ fi
     --enable-luainterp \
     --enable-perlinterp \
     --enable-python3interp \
-    --enable-pythoninterp \
     --enable-rubyinterp \
     --disable-gui \
     --enable-fontset \

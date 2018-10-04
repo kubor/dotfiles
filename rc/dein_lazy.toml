@@ -16,6 +16,7 @@ depends = 'deoplete.nvim'
 on_ft = ['python', 'python3', 'djangohtml']
 hook_post_source = '''
 autocmd vimrc FileType python setlocal omnifunc=jedi#completions
+let g:jedi#force_py_version = 3
 let g:jedi#completions_enabled = 0
 let g:jedi#auto_vim_configuration = 0
 let g:jedi#popup_select_first = 0
@@ -41,3 +42,14 @@ on_ft = ['kotlin']
 [[plugins]]
 repo = 'tpope/vim-rails'
 on_ft = ['ruby']
+
+
+[[plugins]]
+repo  = 'leafgarland/typescript-vim'
+on_ft = ['typescript']
+hook_post_source = '''
+let g:typescript_indent_disable = 1
+let g:typescript_compiler_binary = 'tsc'
+let g:typescript_compiler_options = ''
+'''
+
