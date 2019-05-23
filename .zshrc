@@ -246,6 +246,22 @@ if ${TMUX_AUTO_START:-false} && [[ ! -n $TMUX && $- == *l* ]]; then
   tmux_sessions && exit
 fi
 
+# gitignore.io
+function gi() {
+    curl -sL https://www.gitignore.io/api/$@
+}
+
+_gitignoreio_get_command_list() {
+    curl -sL https://www.gitignore.io/api/list | tr "," "\n"
+}
+
+_gitignoreio () {
+    compset -P '*,'
+    compadd -S '' `_gitignoreio_get_command_list`
+}
+
+compdef _gitignoreio gi
+
 # zplug plugins
 
 zplug 'mafredri/zsh-async', on:sindresorhus/pure

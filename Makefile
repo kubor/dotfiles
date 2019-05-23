@@ -9,3 +9,4 @@ anyanv:
 vim:
 	@echo Install Vim
 	sh ./scripts/install_vim.sh
+	sh ./scripts/fix_vimproc.sh

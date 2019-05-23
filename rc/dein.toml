@@ -134,10 +134,6 @@ endif
 '''
 
 [[plugins]]
-repo = 'Shougo/deoplete.nvim'
-on_i = 1
-
-[[plugins]]
 repo = 'roxma/nvim-yarp'
 depends = 'deoplete.nvim'
 

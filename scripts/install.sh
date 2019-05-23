@@ -21,3 +21,6 @@ sh ${CWD}/set_git_config.sh
 
 # ptpython config
 sh ${CWD}/install_ptpython_config.sh
+
+# install nvim python
+pip3 install nvim

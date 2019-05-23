@@ -53,3 +53,11 @@ let g:typescript_compiler_binary = 'tsc'
 let g:typescript_compiler_options = ''
 '''
 
+[[plugins]]
+repo = 'Shougo/deoplete.nvim'
+depends = [ 'nvim-yarp', 'vim-hug-neovim-rpc' ]
+on_i = 1
+hook_add = '''
+let g:deoplete#enable_at_startup = 1
+'''
+

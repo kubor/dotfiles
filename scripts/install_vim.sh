@@ -42,7 +42,8 @@ make clean
     --with-features=huge \
     --enable-luainterp \
     --enable-perlinterp \
-    --enable-python3interp \
+    --enable-pythoninterp=dynamic \
+    --enable-python3interp=dynamic \
     --enable-rubyinterp \
     --disable-gui \
     --enable-fontset \
