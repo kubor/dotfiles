@@ -16,6 +16,13 @@ fi
 ln -sf ~/dotfiles/rc/dein.toml ~/.vim/rc/dein.toml
 ln -sf ~/dotfiles/rc/dein_lazy.toml ~/.vim/rc/dein_lazy.toml
 
+config_dir="$HOME/.config"
+if [ ! -e $config_dir ]; then
+    mkdir -p "${config_dir}"
+fi
+
+ln -sf ~/dotfiles/.config/alacritty ${config_dir}/
+
 # git-config
 sh ${CWD}/set_git_config.sh
 
@@ -23,4 +30,4 @@ sh ${CWD}/set_git_config.sh
 sh ${CWD}/install_ptpython_config.sh
 
 # install nvim python
-pip3 install nvim
+pip3 install pynvim
