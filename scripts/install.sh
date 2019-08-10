@@ -5,7 +5,6 @@ echo "make symbolic links to $HOME"
 ln -sf ~/dotfiles/.vimrc ~/.vimrc
 ln -sf ~/dotfiles/.ideavimrc ~/.ideavimrc
 ln -sf ~/dotfiles/.zshrc ~/.zshrc
-ln -sf ~/dotfiles/.tmux.conf ~/.tmux.conf
 ln -sf ~/dotfiles/.peco.snippet.bioinfo ~/.peco.snippet.bioinfo
 
 rc_dir="$HOME/.vim/rc"
@@ -31,3 +30,6 @@ sh ${CWD}/install_ptpython_config.sh
 
 # install nvim python
 pip3 install pynvim
+
+# install tmux
+bash ${CWD}/install_tmux.sh

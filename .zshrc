@@ -48,6 +48,9 @@ export GOPATH=$HOME/.go
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:/usr/local/opt/go/libexec/bin
 
+# poetry
+export PATH=$PATH:$HOME/.poetry/bin
+
 ## サーバ個別のPATH設定をインポート
 if [ -f ~/.zshrc.path ]; then
     source ~/.zshrc.path
@@ -160,7 +163,7 @@ setopt auto_pushd
 setopt pushd_ignore_dups
 ## 3秒以上の処理は自動的に処理時間を表示
 REPORTTIME=3
-PURE_PROMPT_SYMBOL="🌸"
+PURE_PROMPT_SYMBOL=">"
 
 # pecoで履歴を検索する
 function peco-history-selection() {

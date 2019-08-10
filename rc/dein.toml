@@ -17,10 +17,10 @@ repo = 'Yggdroot/indentLine'
 repo = 'Shougo/neosnippet-snippets'
 
 [[plugins]]
-repo = 'w0ng/vim-hybrid'
+repo = 'arcticicestudio/nord-vim'
 hook_add = '''
 set background=dark
-colorscheme hybrid
+colorscheme nord
 '''
 
 [[plugins]]
@@ -28,7 +28,7 @@ repo = 'itchyny/lightline.vim'
 hook_add = '''
 " status line settigns
 let g:lightline = {
-    \ 'colorscheme': 'wombat',
+    \ 'colorscheme': 'seoul256',
     \ 'mode_map': {'c': 'NORMAL'},
     \ 'active': {
     \   'left': [
