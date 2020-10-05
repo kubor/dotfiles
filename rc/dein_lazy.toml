@@ -61,3 +61,6 @@ hook_add = '''
 let g:deoplete#enable_at_startup = 1
 '''
 
+[[plugins]]
+repo  = 'posva/vim-vue'
+on_ft = ['vue']

@@ -242,6 +242,7 @@ autocmd BufRead,BufNewFile {*.coffee} set filetype=coffee
 autocmd filetype coffee,javascript setlocal shiftwidth=2 softtabstop=2 tabstop=2 expandtab
 autocmd filetype yaml setlocal shiftwidth=2 softtabstop=2 tabstop=2 expandtab
 autocmd FileType typescript :set makeprg=tsc
+autocmd FileType vue :set makeprg=vue
 
 " open with last cursor position
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\""

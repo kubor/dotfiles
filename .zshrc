@@ -94,6 +94,10 @@ alias -g L="| less"
 alias -g G="| grep"
 alias -g W="| wc"
 
+## docker
+alias dr="docker run --rm -it"
+alias db="docker build"
+
 ## サーバ個別のalias設定をインポート
 if [ -f ~/.zshrc.alias ]; then
     source ~/.zshrc.alias

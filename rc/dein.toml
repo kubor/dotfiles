@@ -180,3 +180,7 @@ repo = 'JuliaLang/julia-vim'
 [[plugins]]
 repo = 'vim-scripts/Vim-R-plugin'
 on_ft = ['R']
+
+[[plugins]]
+repo = 'manabuishii/vim-cwl'
+on_ft = ['cwl']
