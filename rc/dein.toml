@@ -141,6 +141,14 @@ let g:syntastic_python_checkers = ['flake8']
 '''
 
 [[plugins]]
+repo = 'roxma/nvim-yarp'
+depends = 'deoplete.nvim'
+
+[[plugins]]
+repo = 'roxma/vim-hug-neovim-rpc'
+depends = 'deoplete.nvim'
+
+[[plugins]]
 repo = 'Shougo/vimshell'
 
 [[plugins]]
