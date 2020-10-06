@@ -134,14 +134,6 @@ endif
 '''
 
 [[plugins]]
-repo = 'roxma/nvim-yarp'
-depends = 'deoplete.nvim'
-
-[[plugins]]
-repo = 'roxma/vim-hug-neovim-rpc'
-depends = 'deoplete.nvim'
-
-[[plugins]]
 repo = 'scrooloose/syntastic'
 hook_add = '''
 " use flake8 for python lint checker
