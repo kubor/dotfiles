@@ -110,7 +110,7 @@ inoremap <Down>  <Esc>:smile<CR>
 cmap w!! w !sudo tee > /dev/null %
 
 " launch VimFiler
-nnoremap <Space>f :VimFiler -split -simple -winwidth=30 -no-quit<Enter>
+nnoremap <Space>f :VimFiler -split -simple -winwidth=40 -no-quit<Enter>
 
 " macro
 

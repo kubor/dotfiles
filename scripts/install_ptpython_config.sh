@@ -1,7 +1,14 @@
 #!/bin/bash
 
-if [ ! -e ~/.ptpython ]; then
-    mkdir -p ~/.ptpython
+install_dir="${HOME}/.ptpython"
+case "${OSTYPE}" in
+    freebsd*|darwin*)
+        install_dir="${HOME}/Library/Application Support/ptpython"
+    ;;
+esac
+
+if [ ! -e "${install_dir}" ]; then
+    mkdir -p "${install_dir}"
 fi
 
-cp -f ~/dotfiles/.ptpython/config.py ~/.ptpython/
+ln -sf ~/dotfiles/.ptpython/config.py "${install_dir}/config.py"
