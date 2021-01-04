@@ -137,7 +137,7 @@ endif
 repo = 'scrooloose/syntastic'
 hook_add = '''
 " use flake8 for python lint checker
-let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_python_checkers = ['flake8', 'mypy']
 '''
 
 [[plugins]]
