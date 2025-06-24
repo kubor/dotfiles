@@ -1,2 +1,3 @@
 *.swp
 .vim/
+config/claude-code/settings.local.json

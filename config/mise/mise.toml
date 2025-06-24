@@ -1,0 +1,24 @@
+[tools]
+# Programming Languages
+python = ["3.12.0"]
+node = "latest"
+go = "1.23.1"
+rust = "1.81.0"
+
+# CLI Tools
+bat = "latest"
+ripgrep = "latest"
+github-cli = "latest"
+delta = "latest"
+starship = "latest"
+uv = "latest"
+
+# Development Tools
+pre-commit = "latest"
+
+[settings]
+# Automatically install missing tools when entering directories
+auto_install = true
+
+# Trust config files in parent directories
+trusted_config_paths = ["~"]
