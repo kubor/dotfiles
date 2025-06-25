@@ -534,9 +534,6 @@ mouse = "Middle"
 animation = "EaseOutExpo"
 duration = 0
 
-#[colors]
-#draw_bold_text_with_bright_colors = false
-
 [cursor]
 style = "Block"
 unfocused_hollow = true

@@ -51,6 +51,15 @@ ln -sf ${DOTFILES_ROOT}/config/mise/mise.toml ${mise_dir}/config.toml
 # starship config
 ln -sf ${DOTFILES_ROOT}/config/starship/starship.toml ~/.config/starship.toml
 
+# vscode config
+vscode_dir="$HOME/Library/Application Support/Code/User"
+if [ ! -e "$vscode_dir" ]; then
+    mkdir -p "$vscode_dir"
+fi
+ln -sf ${DOTFILES_ROOT}/config/vscode/settings.json "$vscode_dir/settings.json"
+ln -sf ${DOTFILES_ROOT}/config/vscode/keybindings.json "$vscode_dir/keybindings.json"
+ln -sf ${DOTFILES_ROOT}/config/vscode/extensions.json "$vscode_dir/extensions.json"
+
 # tmux config
 echo "Install tmux..."
 ln -sf ${DOTFILES_ROOT}/config/tmux/.tmux.conf ~/.tmux.conf

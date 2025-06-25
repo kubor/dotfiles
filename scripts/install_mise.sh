@@ -60,6 +60,15 @@ function install_mise_tools() {
 function main() {
     echo "=== Setting up mise ==="
     
+    # Check if mise is already installed and configured
+    if command -v mise &> /dev/null && [ -f ~/.config/mise/config.toml ]; then
+        echo "mise is already installed and configured"
+        mise --version
+        echo "Skipping mise installation and configuration"
+        echo "To reinstall, remove ~/.config/mise/config.toml or uninstall mise"
+        return 0
+    fi
+    
     install_mise
     setup_mise_config
     install_mise_tools

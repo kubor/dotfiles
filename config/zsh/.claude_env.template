@@ -1,0 +1,14 @@
+# Claude Code Environment Variables Template
+# Copy this file to ~/.claude_env and fill in your personal values
+
+# Common VERTEX settings
+export CLAUDE_CODE_USE_VERTEX="true"
+
+# Personal settings (requires input)
+export ANTHROPIC_MODEL=""
+export ANTHROPIC_VERTEX_PROJECT_ID=""
+export CLOUD_ML_REGION=""
+
+# Common disable settings
+export DISABLE_PROMPT_CACHING="true"
+export DISABLE_AUTOUPDATER="1"

@@ -180,6 +180,11 @@ if type direnv >/dev/null 2>&1; then
     eval "$(direnv hook zsh)"
 fi
 
+# Load Claude Code environment variables
+if [ -f ~/.claude_env ]; then
+    source ~/.claude_env
+fi
+
 # Alias settings
 alias vi="vim -u NONE --noplugin"
 alias awk="gawk"
