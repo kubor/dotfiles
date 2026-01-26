@@ -60,13 +60,6 @@ ln -sf ${DOTFILES_ROOT}/config/vscode/settings.json "$vscode_dir/settings.json"
 ln -sf ${DOTFILES_ROOT}/config/vscode/keybindings.json "$vscode_dir/keybindings.json"
 ln -sf ${DOTFILES_ROOT}/config/vscode/extensions.json "$vscode_dir/extensions.json"
 
-# tmux config
-echo "Install tmux..."
-ln -sf ${DOTFILES_ROOT}/config/tmux/.tmux.conf ~/.tmux.conf
-if [ ! -d ~/.tmux/plugins/tpm ]; then
-    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-fi
-
 # run mise installation
 if [ -f "${SCRIPT_DIR}/install_mise.sh" ]; then
     echo "Installing mise..."
