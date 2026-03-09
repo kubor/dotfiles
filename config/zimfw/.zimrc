@@ -4,8 +4,6 @@
 
 # Sets sane Zsh built-in environment options.
 zmodule environment
-# Provides handy git aliases and functions.
-zmodule git
 # Applies correct bindkeys for input events.
 zmodule input
 # Sets a custom terminal title.
@@ -17,6 +15,8 @@ zmodule utility
 # Completion
 #
 
+# Zsh abbreviations (like Fish abbreviations).
+zmodule olets/zsh-abbr
 # Additional completion definitions for Zsh.
 zmodule zsh-users/zsh-completions --fpath src
 # Enables and configures smart and extensive tab completion.

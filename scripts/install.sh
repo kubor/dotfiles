@@ -5,6 +5,7 @@ DOTFILES_ROOT=$(dirname "$SCRIPT_DIR")
 echo "make symbolic links to $HOME"
 ln -sf ${DOTFILES_ROOT}/config/vim/.vimrc ~/.vimrc
 ln -sf ${DOTFILES_ROOT}/config/zsh/.zshrc ~/.zshrc
+ln -sf ${DOTFILES_ROOT}/config/zimfw/.zimrc ~/.zimrc
 
 rc_dir="$HOME/.vim/rc"
 if [ ! -e $rc_dir ]; then
@@ -26,6 +27,13 @@ if [ ! -e $alacritty_dir ]; then
 fi
 ln -sf ${DOTFILES_ROOT}/config/alacritty/alacritty.toml ${alacritty_dir}/alacritty.toml
 ln -sf ${DOTFILES_ROOT}/config/alacritty/dracula.toml ${alacritty_dir}/dracula.toml
+
+# ghostty config
+ghostty_dir="${config_dir}/ghostty"
+if [ ! -e $ghostty_dir ]; then
+    mkdir -p "${ghostty_dir}"
+fi
+ln -sf ${DOTFILES_ROOT}/config/ghostty/config ${ghostty_dir}/config
 
 # ptpython config
 ptpython_dir="${config_dir}/ptpython"

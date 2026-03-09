@@ -42,13 +42,6 @@ WORDCHARS=${WORDCHARS//[\/]}
 # --------------------
 
 #
-# git
-#
-
-# Set a custom prefix for the generated aliases. The default prefix is 'G'.
-zstyle ':zim:git' aliases-prefix 'g'
-
-#
 # input
 #
 
@@ -185,15 +178,7 @@ if [ -f ~/.claude_env ]; then
     source ~/.claude_env
 fi
 
-# Alias settings
-alias vi="vim -u NONE --noplugin"
-alias awk="gawk"
-alias mv="mv -i"
-alias rm="rm -i"
-alias grep="grep --color=auto -i"
-alias zgrep="zgrep --color=auto -i"
-alias egrep="egrep --color=auto -i"
-alias src="source ~/.zshrc"
+# Conditional aliases (command substitution - not suitable for abbreviations)
 if type ccat > /dev/null 2>&1; then
     alias cat="ccat"
 fi
@@ -201,37 +186,10 @@ if type htop > /dev/null 2>&1; then
     alias top="htop"
 fi
 
-# eza
-alias ei="eza --icons --git"
-alias ea="eza -a --icons --git"
-alias ee="eza -aahl --icons --git"
-alias et="eza -T -L 3 -a -I 'node_modules|.git|.cache' --icons"
-alias eta="eza -T -a -I 'node_modules|.git|.cache' --color=always --icons | less -r"
-alias ls=ei
-alias la=ea
-alias ll=ee
-alias lt=et
-alias lta=eta
-alias l="clear && ls"
-
-## git related
-alias gst="git status -sb"
-alias gg="git status -sb"
-alias gm="git commit -m"
-alias gb="git branch -a"
-alias co="git checkout"
-
-## make
-alias j4="echo-sd \"DEMOCRACYYYYYYY!!!!!\"; make -j 4"
-
-## Global aliases
+# Global aliases (zsh-abbr does not support global aliases)
 alias -g L="| less"
 alias -g G="| grep"
 alias -g W="| wc"
-
-## docker
-alias dr="docker run --rm -it"
-alias db="docker build"
 
 ## Import server-specific alias settings
 if [ -f ~/.zshrc.alias ]; then
@@ -331,11 +289,27 @@ function peco-ghq-search() {
 }
 zle -N peco-ghq-search
 
+# Search abbreviations with peco
+function peco-abbr-search() {
+    local selected
+    selected=$(abbr | peco --query "$LBUFFER")
+    if [ -n "$selected" ]; then
+        local abbr_key="${selected%%=*}"
+        # Remove surrounding quotes from key if present
+        abbr_key="${abbr_key%\"}"
+        abbr_key="${abbr_key#\"}"
+        LBUFFER="${abbr_key} "
+    fi
+    zle reset-prompt
+}
+zle -N peco-abbr-search
+
 # Register peco-related functions to key bindings
 if type peco >/dev/null 2>&1; then
     bindkey '^r' peco-history-selection
     bindkey '^]' peco-ghq-search
     bindkey '^x' peco-snippets-loader
+    bindkey '^s' peco-abbr-search
 fi
 
 function command_not_found_handler(){
@@ -364,7 +338,7 @@ _gitignoreio () {
 compdef _gitignoreio gi
 
 # init mise
-eval "$(~/.local/bin/mise activate zsh)"
+eval "$(mise activate zsh)"
 
 ## Starship prompt
 eval "$(mise x -- starship init zsh)"
