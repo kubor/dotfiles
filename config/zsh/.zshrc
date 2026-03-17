@@ -337,6 +337,11 @@ _gitignoreio () {
 
 compdef _gitignoreio gi
 
+## Import function definitions
+if [ -f ~/.zshrc.func ]; then
+    source ~/.zshrc.func
+fi
+
 # init mise
 eval "$(mise activate zsh)"
 

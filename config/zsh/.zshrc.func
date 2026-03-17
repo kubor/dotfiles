@@ -1,0 +1,86 @@
+# Rich git status function
+gg() {
+    if ! git rev-parse --is-inside-work-tree &>/dev/null; then
+        print -P "%F{red}Not a git repository%f"
+        return 1
+    fi
+
+    local section_color="%F{cyan}"
+    local reset="%f"
+
+    # 1. Branch + upstream tracking
+    print -P "${section_color}── Branch ──${reset}"
+    git status -sb | head -1
+    echo
+
+    # 2. Staged files
+    local staged
+    staged=$(git diff --cached --name-status)
+    if [[ -n "$staged" ]]; then
+        print -P "${section_color}── Staged ──${reset}"
+        echo "$staged" | while IFS=$'\t' read -r status file rest; do
+            case "$status" in
+                A*)  print -P "  %F{green}+%f $file" ;;
+                D*)  print -P "  %F{red}-%f $file" ;;
+                M*)  print -P "  %F{yellow}~%f $file" ;;
+                R*)  print -P "  %F{blue}>%f $rest ← $file" ;;
+                *)   print -P "  $status $file" ;;
+            esac
+        done
+        echo
+    fi
+
+    # 3. Unstaged files
+    local unstaged
+    unstaged=$(git diff --name-status)
+    if [[ -n "$unstaged" ]]; then
+        print -P "${section_color}── Unstaged ──${reset}"
+        echo "$unstaged" | while IFS=$'\t' read -r status file rest; do
+            case "$status" in
+                A*)  print -P "  %F{green}+%f $file" ;;
+                D*)  print -P "  %F{red}-%f $file" ;;
+                M*)  print -P "  %F{yellow}~%f $file" ;;
+                R*)  print -P "  %F{blue}>%f $rest ← $file" ;;
+                *)   print -P "  $status $file" ;;
+            esac
+        done
+        echo
+    fi
+
+    # 4. Untracked files
+    local untracked
+    untracked=$(git ls-files --others --exclude-standard)
+    if [[ -n "$untracked" ]]; then
+        print -P "${section_color}── Untracked ──${reset}"
+        echo "$untracked" | while read -r file; do
+            print -P "  %F{magenta}?%f $file"
+        done
+        echo
+    fi
+
+    # 5. Stash count
+    local stash_count
+    stash_count=$(git stash list 2>/dev/null | wc -l | tr -d ' ')
+    if [[ "$stash_count" -gt 0 ]]; then
+        print -P "${section_color}── Stash ──${reset}"
+        print -P "  %F{yellow}${stash_count}%f stash(es)"
+        echo
+    fi
+
+    # 6. Recent commits
+    local log_output
+    log_output=$(git log --oneline --graph --decorate --color=always -5 2>/dev/null)
+    if [[ -n "$log_output" ]]; then
+        print -P "${section_color}── Recent Commits ──${reset}"
+        echo "$log_output"
+        echo
+    fi
+
+    # 7. Diff stat
+    local diff_stat
+    diff_stat=$(git diff --stat --color=always HEAD 2>/dev/null)
+    if [[ -n "$diff_stat" ]]; then
+        print -P "${section_color}── Diff Stat ──${reset}"
+        echo "$diff_stat"
+    fi
+}

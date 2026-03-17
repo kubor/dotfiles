@@ -5,6 +5,7 @@ DOTFILES_ROOT=$(dirname "$SCRIPT_DIR")
 echo "make symbolic links to $HOME"
 ln -sf ${DOTFILES_ROOT}/config/vim/.vimrc ~/.vimrc
 ln -sf ${DOTFILES_ROOT}/config/zsh/.zshrc ~/.zshrc
+ln -sf ${DOTFILES_ROOT}/config/zsh/.zshrc.func ~/.zshrc.func
 ln -sf ${DOTFILES_ROOT}/config/zimfw/.zimrc ~/.zimrc
 
 rc_dir="$HOME/.vim/rc"

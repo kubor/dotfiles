@@ -2,7 +2,7 @@
 # Programming Languages
 python = ["3.12.0"]
 node = "latest"
-go = "1.23.1"
+go = "latest"
 rust = "1.81.0"
 
 # CLI Tools
@@ -15,6 +15,10 @@ uv = "latest"
 
 # Development Tools
 pre-commit = "latest"
+eza = "latest"
+zellij = "latest"
+actionlint = "latest"
+shellcheck = "latest"
 
 [settings]
 # Automatically install missing tools when entering directories
@@ -22,3 +26,4 @@ auto_install = true
 
 # Trust config files in parent directories
 trusted_config_paths = ["~"]
+idiomatic_version_file_enable_tools = ["node"]
