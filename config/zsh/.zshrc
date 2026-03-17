@@ -97,12 +97,15 @@ if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
         https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
   fi
 fi
-# Install missing modules, and update ${ZIM_HOME}/init.zsh if missing or outdated.
-if [[ ! ${ZIM_HOME}/init.zsh -nt ${ZIM_CONFIG_FILE:-${ZDOTDIR:-${HOME}}/.zimrc} ]]; then
-  source ${ZIM_HOME}/zimfw.zsh init
+# Initialize modules (only once per shell session to avoid compinit warnings).
+if [[ -z "$_ZIM_INITIALIZED" ]]; then
+  # Install missing modules, and update ${ZIM_HOME}/init.zsh if missing or outdated.
+  if [[ ! ${ZIM_HOME}/init.zsh -nt ${ZIM_CONFIG_FILE:-${ZDOTDIR:-${HOME}}/.zimrc} ]]; then
+    source ${ZIM_HOME}/zimfw.zsh init
+  fi
+  source ${ZIM_HOME}/init.zsh
+  _ZIM_INITIALIZED=1
 fi
-# Initialize modules.
-source ${ZIM_HOME}/init.zsh
 
 # ------------------------------
 # Post-init module configuration
