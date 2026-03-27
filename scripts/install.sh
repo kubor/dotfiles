@@ -3,6 +3,7 @@ SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 DOTFILES_ROOT=$(dirname "$SCRIPT_DIR")
 
 echo "make symbolic links to $HOME"
+ln -sf ${DOTFILES_ROOT}/config/bash/.bash_profile ~/.bash_profile
 ln -sf ${DOTFILES_ROOT}/config/vim/.vimrc ~/.vimrc
 ln -sf ${DOTFILES_ROOT}/config/zsh/.zshrc ~/.zshrc
 ln -sf ${DOTFILES_ROOT}/config/zsh/.zshrc.func ~/.zshrc.func
