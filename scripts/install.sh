@@ -51,6 +51,19 @@ if [ ! -e "$claude_dir" ]; then
     mkdir -p "${claude_dir}"
 fi
 ln -sf "${DOTFILES_ROOT}/config/claude-code/settings.json" "${claude_dir}/settings.json"
+ln -sf "${DOTFILES_ROOT}/config/claude-code/CLAUDE.md" "${claude_dir}/CLAUDE.md"
+
+# claude code skills
+claude_skills_dir="${claude_dir}/skills"
+if [ ! -e "$claude_skills_dir" ]; then
+    mkdir -p "${claude_skills_dir}"
+fi
+for skill_dir in "${DOTFILES_ROOT}"/config/claude-code/skills/*/; do
+    if [ -d "$skill_dir" ]; then
+        skill_name=$(basename "$skill_dir")
+        ln -snf "$skill_dir" "${claude_skills_dir}/${skill_name}"
+    fi
+done
 
 # mise config
 mise_dir="${config_dir}/mise"
