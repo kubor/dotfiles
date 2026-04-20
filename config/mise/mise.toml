@@ -19,6 +19,7 @@ eza = "latest"
 zellij = "latest"
 actionlint = "latest"
 shellcheck = "latest"
+hyperfine = "latest"
 
 [settings]
 # Automatically install missing tools when entering directories

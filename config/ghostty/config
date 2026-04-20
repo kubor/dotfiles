@@ -1,0 +1,26 @@
+# Font
+font-family = HackGen35 Console NF
+font-size = 14
+
+# Theme
+theme = Ayu Mirage
+
+# Window
+window-padding-x = 8
+window-padding-y = 0
+
+# Scrollback
+scrollback-limit = 100000
+
+# Cursor
+cursor-style = block
+cursor-style-blink = false
+
+# Shell Integration
+shell-integration = detect
+
+# Copy on select
+copy-on-select = clipboard
+
+# macOS
+macos-titlebar-style = tabs

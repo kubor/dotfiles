@@ -1,10 +1,17 @@
 {
-  "memory": "auto",
-  "editorMode": "vscode",
   "respectGitignore": true,
-  "detectSecrets": true,
-  "maxTokens": 8192,
-  "temperature": 0.7,
+  "env": {
+    "DISABLE_AUTOUPDATER": "0",
+    "CLOUD_ML_REGION": "us-east5",
+    "CLAUDE_CODE_USE_VERTEX": "true",
+    "ANTHROPIC_MODEL": "claude-opus-4-6",
+    "ANTHROPIC_VERTEX_PROJECT_ID": "caddi-ai-tools-dev",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "claude-opus-4-6",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "claude-sonnet-4-6",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "claude-haiku-4-5",
+    "CLAUDE_CODE_SUBAGENT_MODEL": "claude-sonnet-4-6",
+    "ENABLE_TOOL_SEARCH": "1"
+  },
   "permissions": {
     "allow": [
       "List(*)",
@@ -12,57 +19,30 @@
       "Bash(ls:*)",
       "Bash(rg:*)",
       "Bash(mv:*)",
-      "Bash(find:*)",
       "Bash(make:*)",
       "Bash(mkdir:*)",
       "Bash(cp:*)",
       "Bash(mise:*)",
-      "Bash(chmod:*)",
-      "Bash(chown:*)",
-      "Bash(grep:*)",
-      "Bash(cat:*)",
-      "Bash(head:*)",
-      "Bash(tail:*)",
-      "Bash(less:*)",
-      "Bash(more:*)",
+      "Bash(hyperfine:*)",
       "Bash(wc:*)",
       "Bash(sort:*)",
       "Bash(uniq:*)",
       "Bash(cut:*)",
       "Bash(sed:*)",
-      "Bash(tar:*)",
-      "Bash(gzip:*)",
-      "Bash(gunzip:*)",
-      "Bash(zip:*)",
-      "Bash(unzip:*)",
       "Bash(curl:*)",
-      "Bash(curl -s:*)",
       "Bash(wget:*)",
       "Bash(ps:*)",
-      "Bash(top:*)",
       "Bash(which:*)",
-      "Bash(whereis:*)",
       "Bash(whoami:*)",
       "Bash(pwd:*)",
       "Bash(du:*)",
       "Bash(df:*)",
       "Bash(date:*)",
-      "Bash(echo:*)",
-      "Bash(printf:*)",
-      "Bash(history:*)",
-      "Bash(alias:*)",
-      "Bash(env:*)",
-      "Bash(export:*)",
-      "Bash(source:*)",
       "Bash(ln:*)",
       "Bash(touch:*)",
       "Bash(file:*)",
       "Bash(stat:*)",
       "Bash(diff:*)",
-      "Bash(cmp:*)",
-      "Bash(ping:*)",
-      "Bash(netstat:*)",
-      "Bash(lsof:*)",
       "Bash(brew:*)",
       "Bash(npm:*)",
       "Bash(yarn:*)",
@@ -86,11 +66,7 @@
       "mcp__github__get_issue",
       "mcp__github__add_issue_comment",
       "mcp__github__get_issue_comments",
-      "Bash(claude config list --global)",
-      "Bash(claude config list)",
-      "Bash(claude config set --global editor code)",
-      "Bash(claude config set --global editorMode vscode)",
-      "Bash(claude config set editor code)",
+      "Bash(claude config:*)",
       "Bash(uv:*)",
       "Bash(git commit:*)",
       "Bash(docker:*)",
@@ -106,8 +82,22 @@
       "WebFetch(domain:pytorch.org)",
       "WebFetch(domain:docs.python.org)",
       "WebFetch(domain:developer.mozilla.org)",
-      "WebFetch(domain:kaggle.com)"
+      "WebFetch(domain:kaggle.com)",
+      "Bash(cargo:*)",
+      "Bash(RUSTUP_TOOLCHAIN=stable cargo:*)",
+      "Bash(rustup:*)",
+      "Bash(rustc:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(gh api:*)",
+      "Bash(gh repo view:*)",
+      "Bash(gh issue list:*)",
+      "Bash(git remote:*)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:crates.io)"
     ],
+    "defaultMode": "plan",
     "deny": [
       "Bash(git push origin main)",
       "Bash(pip:*)",
@@ -129,5 +119,56 @@
       "Write(.env*)",
       "Write(**/secrets/**)"
     ]
-  }
+  },
+  "model": "opus",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "[ -n \"$TMPDIR\" ] && mkdir -p \"$TMPDIR\" && echo 'OK' || echo 'TMPDIR not set'"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "/Users/ryuichi_kubo/.claude/statusline.sh",
+    "padding": 0
+  },
+  "enabledPlugins": {
+    "usage-collector@awesome-claude-marketplace": true,
+    "commit-commands@claude-plugins-official": true,
+    "claude-bench@awesome-claude-marketplace": true,
+    "codex@openai-codex": true
+  },
+  "extraKnownMarketplaces": {
+    "awesome-claude-marketplace": {
+      "source": {
+        "source": "git",
+        "url": "git@github.com:caddi-sandbox/awesome-claude-marketplace.git"
+      }
+    },
+    "claude-plugins-official": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/claude-plugins-official"
+      }
+    },
+    "openai-codex": {
+      "source": {
+        "source": "github",
+        "repo": "openai/codex-plugin-cc"
+      }
+    }
+  },
+  "autoUpdatesChannel": "stable",
+  "plansDirectory": "./plans",
+  "memory": "auto",
+  "editorMode": "vscode",
+  "detectSecrets": true,
+  "maxTokens": 8192,
+  "temperature": 0.7
 }

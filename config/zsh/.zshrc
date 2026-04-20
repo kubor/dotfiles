@@ -139,8 +139,8 @@ unset key
 
 # LANG
 export LANG=ja_JP.UTF-8
-# Use vim
-export EDITOR="vim"
+# Use neovim
+export EDITOR="nvim"
 
 # set term env
 export TERM="xterm-256color"

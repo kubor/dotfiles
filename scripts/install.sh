@@ -9,18 +9,13 @@ ln -sf ${DOTFILES_ROOT}/config/zsh/.zshrc ~/.zshrc
 ln -sf ${DOTFILES_ROOT}/config/zsh/.zshrc.func ~/.zshrc.func
 ln -sf ${DOTFILES_ROOT}/config/zimfw/.zimrc ~/.zimrc
 
-rc_dir="$HOME/.vim/rc"
-if [ ! -e $rc_dir ]; then
-    mkdir -p "${rc_dir}"
-fi
-
-ln -sf ${DOTFILES_ROOT}/config/vim/rc/dein.toml ${rc_dir}/dein.toml
-ln -sf ${DOTFILES_ROOT}/config/vim/rc/dein_lazy.toml ${rc_dir}/dein_lazy.toml
-
 config_dir="$HOME/.config"
 if [ ! -e $config_dir ]; then
     mkdir -p "${config_dir}"
 fi
+
+# neovim config
+ln -snf "${DOTFILES_ROOT}/config/nvim" "${config_dir}/nvim"
 
 # alacritty config
 alacritty_dir="${config_dir}/alacritty"

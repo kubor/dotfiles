@@ -30,7 +30,7 @@
   "editor.quickSuggestions": {
     "other": true,
     "comments": false,
-    "strings": false
+    "strings": false,
   },
 
   "terminal.integrated.fontFamily": "'HackGen35 Console NF', 'JetBrains Mono', 'Fira Code', 'SF Mono', Monaco, 'Cascadia Code', monospace",
@@ -52,7 +52,7 @@
     "**/CVS": true,
     "**/.DS_Store": true,
     "**/node_modules": true,
-    "**/.vscode": false
+    "**/.vscode": false,
   },
 
   "explorer.confirmDelete": false,
@@ -73,7 +73,7 @@
     "**/*.code-search": true,
     "**/dist": true,
     "**/build": true,
-    "**/.git": true
+    "**/.git": true,
   },
 
   "typescript.updateImportsOnFileMove.enabled": "always",
@@ -86,7 +86,7 @@
 
   "eslint.format.enable": true,
   "eslint.codeAction.showDocumentation": {
-    "enable": true
+    "enable": true,
   },
 
   "prettier.singleQuote": true,
@@ -98,20 +98,20 @@
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": "explicit"
-    }
+      "source.fixAll.eslint": "explicit",
+    },
   },
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": "explicit"
-    }
+      "source.fixAll.eslint": "explicit",
+    },
   },
   "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "[markdown]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
@@ -119,26 +119,26 @@
     "editor.quickSuggestions": {
       "comments": "off",
       "strings": "off",
-      "other": "off"
-    }
+      "other": "off",
+    },
   },
   "[yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.insertSpaces": true,
     "editor.tabSize": 2,
-    "editor.autoIndent": "keep"
+    "editor.autoIndent": "keep",
   },
   "[toml]": {
     "editor.insertSpaces": true,
-    "editor.tabSize": 2
+    "editor.tabSize": 2,
   },
   "[shellscript]": {
     "editor.insertSpaces": true,
-    "editor.tabSize": 2
+    "editor.tabSize": 2,
   },
   "[dockerfile]": {
     "editor.insertSpaces": true,
-    "editor.tabSize": 2
+    "editor.tabSize": 2,
   },
 
   "vim.easymotion": true,
@@ -150,23 +150,32 @@
   "vim.insertModeKeyBindings": [
     {
       "before": ["j", "j"],
-      "after": ["<Esc>"]
-    }
+      "after": ["<Esc>"],
+    },
   ],
   "vim.normalModeKeyBindingsNonRecursive": [
     {
       "before": ["<leader>", "d"],
-      "after": ["d", "d"]
+      "after": ["d", "d"],
     },
     {
       "before": ["<C-n>"],
-      "commands": [":nohl"]
-    }
+      "commands": [":nohl"],
+    },
   ],
   "vim.leader": "<space>",
+  "vim.handleKeys": {
+    "<C-a>": false,
+    "<C-f>": false,
+  },
 
   "security.workspace.trust.untrustedFiles": "open",
-  "telemetry.telemetryLevel": "off",
   "update.mode": "start",
-  "workbench.editor.tabActionLocation": "right"
+  "workbench.editor.tabActionLocation": "right",
+  "github.copilot.nextEditSuggestions.enabled": true,
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "claudeCode.preferredLocation": "sidebar",
+  "claudeCode.selectedModel": "opus",
+  "python.defaultInterpreterPath": "/Library/Frameworks/Python.framework/Versions/3.12/bin/python",
+  "git.openRepositoryInParentFolders": "always",
 }
