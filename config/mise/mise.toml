@@ -16,6 +16,7 @@ uv = "latest"
 # Development Tools
 pre-commit = "latest"
 eza = "latest"
+fzf = "latest"
 zellij = "latest"
 actionlint = "latest"
 shellcheck = "latest"

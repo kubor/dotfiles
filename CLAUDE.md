@@ -25,13 +25,12 @@ actionlint
 このリポジトリはdotfilesを管理するためのものです。主な構造は以下の通りです：
 
 - `config/`: 各種設定ファイル
-  - 各ツールのディレクトリ（bat, fd, gh, git, mise, zshなど）
+  - 各ツールのディレクトリ（git, mise, zsh, starship, nvimなど）
   - 各ディレクトリには、そのツールの設定ファイルが格納
   
 - `scripts/`: インストールスクリプト
   - `common/`: 共通のインストールスクリプト
-  - `mac/`: macOS特有のインストールスクリプト
-  - `ubuntu/`: Ubuntu特有のインストールスクリプト
+  - `macos/`: macOS特有のインストールスクリプト
   - `install.sh`: scripts/ 以下のスクリプトを確認してインストールを実行するスクリプト
 
 ## アーキテクチャ概要 (Architecture Overview)

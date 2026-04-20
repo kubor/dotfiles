@@ -1,3 +1,8 @@
+# Prompt character
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+
 [aws]
 symbol = "  "
 
@@ -29,6 +34,7 @@ symbol = " "
 symbol = " "
 
 [directory]
+truncation_length = 3
 read_only = " 󰌾"
 
 [docker_context]
@@ -47,9 +53,11 @@ symbol = " "
 symbol = " "
 
 [gcloud]
+disabled = true
 symbol = "  "
 
 [git_branch]
+format = "[$branch]($style) "
 symbol = " "
 
 [git_commit]
@@ -98,6 +106,7 @@ symbol = "󰆥 "
 symbol = " "
 
 [nodejs]
+disabled = true
 symbol = " "
 
 [ocaml]
@@ -151,6 +160,7 @@ Void = " "
 Windows = "󰍲 "
 
 [package]
+disabled = true
 symbol = "󰏗 "
 
 [perl]

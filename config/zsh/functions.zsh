@@ -1,3 +1,92 @@
+# fzf: Search history
+function fzf-history-selection() {
+    cmd='tac'
+    case "${OSTYPE}" in
+        freebsd*|darwin*)
+            cmd=('tail' '-r')
+        ;;
+    esac
+    BUFFER=$(history -n 1 | $cmd | awk '!a[$0]++' | fzf --no-sort --reverse)
+    CURSOR=$#BUFFER
+    zle reset-prompt
+}
+zle -N fzf-history-selection
+
+# fzf: Jump to ghq-managed repository
+function fzf-ghq-search() {
+    local selected_dir
+    selected_dir=$(ghq list -p | fzf --query "$LBUFFER" --preview 'eza --icons --git -1 {}')
+    if [ -n "$selected_dir" ]; then
+        BUFFER="cd ${selected_dir}"
+        zle accept-line
+    fi
+    zle clear-screen
+}
+zle -N fzf-ghq-search
+
+# fzf: Load snippets
+function fzf-snippets-loader() {
+    if ls ~/.peco.snippet* >/dev/null 2>&1; then
+        local snippet
+        snippet=$(cat ~/.peco.snippet* | grep -v "^#" | fzf)
+        BUFFER="$(echo "$snippet" | sed -e 's/^\[.*\] *//') "
+        CURSOR=$#BUFFER
+    else
+        echo "~/.peco.snippet* is not found."
+    fi
+    zle reset-prompt
+}
+zle -N fzf-snippets-loader
+
+# fzf: Search abbreviations
+function fzf-abbr-search() {
+    local selected
+    selected=$(abbr | fzf --query "$LBUFFER")
+    if [ -n "$selected" ]; then
+        local abbr_key="${selected%%=*}"
+        # Remove surrounding quotes from key if present
+        abbr_key="${abbr_key%\"}"
+        abbr_key="${abbr_key#\"}"
+        LBUFFER="${abbr_key} "
+    fi
+    zle reset-prompt
+}
+zle -N fzf-abbr-search
+
+# Register fzf keybindings
+if type fzf >/dev/null 2>&1; then
+    bindkey '^r' fzf-history-selection
+    bindkey '^]' fzf-ghq-search
+    bindkey '^x' fzf-snippets-loader
+    bindkey '^s' fzf-abbr-search
+fi
+
+# gitignore.io
+function gi() {
+    curl -sL "https://www.gitignore.io/api/$*"
+}
+
+_gitignoreio_get_command_list() {
+    curl -sL https://www.gitignore.io/api/list | tr "," "\n"
+}
+
+_gitignoreio () {
+    compset -P '*,'
+    compadd -S '' "$(_gitignoreio_get_command_list)"
+}
+
+compdef _gitignoreio gi
+
+# command_not_found_handler
+function command_not_found_handler(){
+    if [ -e "$HOME/bin/imgcat" ]; then
+        if [ -e ~/src/commandmiss/iori.jpg ]; then
+            imgcat ~/src/commandmiss/iori.jpg
+        fi
+    fi
+    echo "Huh...? What are you talking about with '$1'?\nYou can't even remember commands properly, you're utterly hopeless."
+}
+
 # Rich git status function
 gg() {
     if ! git rev-parse --is-inside-work-tree &>/dev/null; then
